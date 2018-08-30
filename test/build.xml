@@ -24,7 +24,7 @@
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" />  
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}">  
             <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->  
-            <testplans dir="C:\Program Files\Java\jmeter\canonchain-test\test" includes="create-send1.jmx" />  
+            <testplans dir="C:\Program Files\Java\jmeter\canonchain-test\test" includes="create-send.jmx" />  
             <property name="jmeter.save.saveservice.output_format" value="xml"/>
         </jmeter>  
     </target>  
