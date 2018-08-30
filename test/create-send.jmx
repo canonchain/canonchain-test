@@ -15,7 +15,7 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">${Cycletimes}</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">${ThreadNum}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -48,21 +48,27 @@
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">线程数</stringProp>
             </elementProp>
+            <elementProp name="Cycletimes" elementType="Argument">
+              <stringProp name="Argument.name">Cycletimes</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">循环次数</stringProp>
+            </elementProp>
             <elementProp name="rowNum" elementType="Argument">
               <stringProp name="Argument.name">rowNum</stringProp>
-              <stringProp name="Argument.value">2</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">create循环次数</stringProp>
             </elementProp>
             <elementProp name="predictNum" elementType="Argument">
               <stringProp name="Argument.name">predictNum</stringProp>
-              <stringProp name="Argument.value">15</stringProp>
+              <stringProp name="Argument.value">10</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">预测账户数量</stringProp>
             </elementProp>
             <elementProp name="rowNum1" elementType="Argument">
               <stringProp name="Argument.name">rowNum1</stringProp>
-              <stringProp name="Argument.value">2</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">send循环次数</stringProp>
             </elementProp>
