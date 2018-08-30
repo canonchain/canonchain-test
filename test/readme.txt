@@ -1,1 +1,1 @@
-zh文件是creat-send要用到的参数，对应的是from和amount
+create_send准备工作：需要新建一个名为create.txt，里面输入密码值
