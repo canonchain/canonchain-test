@@ -15,9 +15,9 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${Cycletimes}</stringProp>
+          <stringProp name="LoopController.loops">${cycleTimes}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${ThreadNum}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${threadNum}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1532659913000</longProp>
         <longProp name="ThreadGroup.end_time">1532659913000</longProp>
@@ -42,14 +42,14 @@
         <hashTree/>
         <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
           <collectionProp name="Arguments.arguments">
-            <elementProp name="ThreadNum" elementType="Argument">
-              <stringProp name="Argument.name">ThreadNum</stringProp>
+            <elementProp name="threadNum" elementType="Argument">
+              <stringProp name="Argument.name">threadNum</stringProp>
               <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">线程数</stringProp>
             </elementProp>
-            <elementProp name="Cycletimes" elementType="Argument">
-              <stringProp name="Argument.name">Cycletimes</stringProp>
+            <elementProp name="cycleTimes" elementType="Argument">
+              <stringProp name="Argument.name">cycleTimes</stringProp>
               <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">循环次数</stringProp>
@@ -66,8 +66,8 @@
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">预测账户数量</stringProp>
             </elementProp>
-            <elementProp name="rowNum1" elementType="Argument">
-              <stringProp name="Argument.name">rowNum1</stringProp>
+            <elementProp name="loopCount" elementType="Argument">
+              <stringProp name="Argument.name">loopCount</stringProp>
               <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">send循环次数</stringProp>
@@ -90,8 +90,8 @@
               <stringProp name="Argument.desc">充值金额</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
-            <elementProp name="amountt" elementType="Argument">
-              <stringProp name="Argument.name">amountt</stringProp>
+            <elementProp name="quantity" elementType="Argument">
+              <stringProp name="Argument.name">quantity</stringProp>
               <stringProp name="Argument.value">0</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
               <stringProp name="Argument.desc">转账金额</stringProp>
@@ -334,7 +334,7 @@ try{
         </hashTree>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">${rowNum1}</stringProp>
+          <stringProp name="LoopController.loops">${loopCount}</stringProp>
         </LoopController>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="sendd${__CSVRead(${filetext},)}" enabled="true">
@@ -347,7 +347,7 @@ try{
         &quot;action&quot;: &quot;send&quot;,&#xd;
         &quot;from&quot;: &quot;${fromm}&quot;,&#xd;
         &quot;to&quot;: &quot;${too}&quot;,&#xd;
-        &quot;amount&quot;: &quot;${amountt}&quot;,&#xd;
+        &quot;amount&quot;: &quot;${quantity}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;&#xd;
         }</stringProp>
