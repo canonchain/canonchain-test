@@ -31,31 +31,25 @@
             <stringProp name="Argument.name">theadNum</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程数</stringProp>
+            <stringProp name="Argument.desc">线程1线程数</stringProp>
           </elementProp>
           <elementProp name="cycleTimes" elementType="Argument">
             <stringProp name="Argument.name">cycleTimes</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程循环次数</stringProp>
-          </elementProp>
-          <elementProp name="predictNum" elementType="Argument">
-            <stringProp name="Argument.name">predictNum</stringProp>
-            <stringProp name="Argument.value">10</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">预测账户数量</stringProp>
-          </elementProp>
-          <elementProp name="sendCount" elementType="Argument">
-            <stringProp name="Argument.name">sendCount</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">send循环次数</stringProp>
+            <stringProp name="Argument.desc">线程1线程循环次数</stringProp>
           </elementProp>
           <elementProp name="filetext" elementType="Argument">
             <stringProp name="Argument.name">filetext</stringProp>
             <stringProp name="Argument.value">C:\Program Files\Java\jmeter\canonchain-test\test\accounts.txt</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">账户写入的文件</stringProp>
+            <stringProp name="Argument.desc">线程1账户写入的文件路径</stringProp>
+          </elementProp>
+          <elementProp name="accountjson" elementType="Argument">
+            <stringProp name="Argument.name">accountjson</stringProp>
+            <stringProp name="Argument.value">\&quot;account\&quot;:\&quot;czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat\&quot;,\&quot;kdf_salt\&quot;:\&quot;C971B2EDC225BE556CE30EB876F76D1106CDC3ED33C930CEDF9DD4C4143AB177\&quot;,\&quot;iv\&quot;:\&quot;D36D2FF13F2ADFA0096CC6513137303C\&quot;,\&quot;ciphertext\&quot;:\&quot;76E3BCB1D3789C02262665EE53EB58130BE1931686E088F71611E6579C212A55\&quot;</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">线程1import文件</stringProp>
           </elementProp>
           <elementProp name="from" elementType="Argument">
             <stringProp name="Argument.name">from</stringProp>
@@ -66,19 +60,38 @@
           <elementProp name="amount" elementType="Argument">
             <stringProp name="Argument.name">amount</stringProp>
             <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">充值金额</stringProp>
+            <stringProp name="Argument.desc">线程1充值金额</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="predictNum" elementType="Argument">
+            <stringProp name="Argument.name">predictNum</stringProp>
+            <stringProp name="Argument.value">10</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">线程1预测账户数量</stringProp>
+          </elementProp>
+          <elementProp name="theadnum" elementType="Argument">
+            <stringProp name="Argument.name">theadnum</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.desc">线程2线程数</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="cycletimes" elementType="Argument">
+            <stringProp name="Argument.name">cycletimes</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.desc">线程2线程循环次数</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="sendCount" elementType="Argument">
+            <stringProp name="Argument.name">sendCount</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">线程2send循环次数</stringProp>
           </elementProp>
           <elementProp name="quantity" elementType="Argument">
             <stringProp name="Argument.name">quantity</stringProp>
             <stringProp name="Argument.value">0</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">转账金额</stringProp>
-          </elementProp>
-          <elementProp name="accountjson" elementType="Argument">
-            <stringProp name="Argument.name">accountjson</stringProp>
-            <stringProp name="Argument.value">\&quot;account\&quot;:\&quot;czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat\&quot;,\&quot;kdf_salt\&quot;:\&quot;C971B2EDC225BE556CE30EB876F76D1106CDC3ED33C930CEDF9DD4C4143AB177\&quot;,\&quot;iv\&quot;:\&quot;D36D2FF13F2ADFA0096CC6513137303C\&quot;,\&quot;ciphertext\&quot;:\&quot;76E3BCB1D3789C02262665EE53EB58130BE1931686E088F71611E6579C212A55\&quot;</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">线程2转账金额</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
@@ -303,7 +316,7 @@ try{
               <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
             </BeanShellSampler>
             <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="send{充值" enabled="true">
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="send" enabled="true">
               <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
               <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
                 <collectionProp name="Arguments.arguments">
@@ -365,9 +378,9 @@ try{
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">${cycletimes}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${theadnum}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1536050588000</longProp>
         <longProp name="ThreadGroup.end_time">1536050588000</longProp>
