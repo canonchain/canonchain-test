@@ -31,6 +31,7 @@
             <stringProp name="Argument.name">theadNum</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">线程数</stringProp>
           </elementProp>
           <elementProp name="cycleTimes" elementType="Argument">
             <stringProp name="Argument.name">cycleTimes</stringProp>
@@ -52,7 +53,7 @@
           </elementProp>
           <elementProp name="filetext" elementType="Argument">
             <stringProp name="Argument.name">filetext</stringProp>
-            <stringProp name="Argument.value">C:\Program Files\Java\jmeter\OMC418\accounts.txt</stringProp>
+            <stringProp name="Argument.value">C:\Program Files\Java\jmeter\canonchain-test\test\accounts.txt</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">账户写入的文件</stringProp>
           </elementProp>
