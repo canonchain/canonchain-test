@@ -119,7 +119,7 @@
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
         &quot;action&quot;: &quot;account_import&quot;,&#xd;
-       &quot;json&quot;:&quot;${accountjson}&quot;&#xd;
+       &quot;json&quot;:&quot;${accountJson}&quot;&#xd;
 &#xd;
     }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
