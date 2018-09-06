@@ -27,27 +27,27 @@
       <hashTree/>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="用户定义的变量" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="theadNum" elementType="Argument">
-            <stringProp name="Argument.name">theadNum</stringProp>
+          <elementProp name="accountThreadNum" elementType="Argument">
+            <stringProp name="Argument.name">accountThreadNum</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">线程1线程数</stringProp>
           </elementProp>
-          <elementProp name="cycleTimes" elementType="Argument">
-            <stringProp name="Argument.name">cycleTimes</stringProp>
+          <elementProp name="accountCycleTimes" elementType="Argument">
+            <stringProp name="Argument.name">accountCycleTimes</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">线程1线程循环次数</stringProp>
           </elementProp>
           <elementProp name="filetext" elementType="Argument">
             <stringProp name="Argument.name">filetext</stringProp>
-            <stringProp name="Argument.value">C:\Program Files\Java\jmeter\canonchain-test\test\accounts.txt</stringProp>
+            <stringProp name="Argument.value">.\examples\accounts.txt</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">线程1账户写入的文件路径</stringProp>
           </elementProp>
           <elementProp name="accountjson" elementType="Argument">
             <stringProp name="Argument.name">accountjson</stringProp>
-            <stringProp name="Argument.value">\&quot;account\&quot;:\&quot;czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat\&quot;,\&quot;kdf_salt\&quot;:\&quot;C971B2EDC225BE556CE30EB876F76D1106CDC3ED33C930CEDF9DD4C4143AB177\&quot;,\&quot;iv\&quot;:\&quot;D36D2FF13F2ADFA0096CC6513137303C\&quot;,\&quot;ciphertext\&quot;:\&quot;76E3BCB1D3789C02262665EE53EB58130BE1931686E088F71611E6579C212A55\&quot;</stringProp>
+            <stringProp name="Argument.value">\&quot;account\&quot;:\&quot;czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat\&quot;,\&quot;kdf_salt\&quot;:\&quot;C971B2EDC225BE556CE30EB876F76D1106CDC3ED33C930CEDF9DD4C4143AB177\&quot;,\&quot;iv\&quot;:\&quot;D36D2FF13F2ADFA0096CC6513137303C\&quot;,\&quot;ciphertext\&quot;:\&quot;76E3BCB1D3789C02262665EE53EB58130BE1931686E088F71611E6579C212A55\&quot;}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">线程1import文件</stringProp>
           </elementProp>
@@ -65,18 +65,18 @@
           </elementProp>
           <elementProp name="predictNum" elementType="Argument">
             <stringProp name="Argument.name">predictNum</stringProp>
-            <stringProp name="Argument.value">10</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">线程1预测账户数量</stringProp>
           </elementProp>
-          <elementProp name="theadnum" elementType="Argument">
-            <stringProp name="Argument.name">theadnum</stringProp>
+          <elementProp name="sendThreadnum" elementType="Argument">
+            <stringProp name="Argument.name">sendThreadnum</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.desc">线程2线程数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="cycletimes" elementType="Argument">
-            <stringProp name="Argument.name">cycletimes</stringProp>
+          <elementProp name="sendCycletimes" elementType="Argument">
+            <stringProp name="Argument.name">sendCycletimes</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.desc">线程2线程循环次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
@@ -96,13 +96,13 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="线程组1 " enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="account_create" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${cycleTimes}</stringProp>
+          <stringProp name="LoopController.loops">${accountCycleTimes}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${theadNum}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${accountThreadNum}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1532659913000</longProp>
         <longProp name="ThreadGroup.end_time">1532659913000</longProp>
@@ -140,7 +140,17 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="1289414348">  &quot;success&quot;: &quot;1&quot;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
         <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
           <stringProp name="WhileController.condition">${__jexl3(${__BeanShell(${predictNum}-${total_lines},)}&gt;0,aa)}</stringProp>
         </WhileController>
@@ -374,13 +384,13 @@ try{
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="线程组2" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="send" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">${cycletimes}</stringProp>
+          <stringProp name="LoopController.loops">${sendCycletimes}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${theadnum}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${sendThreadnum}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1536050588000</longProp>
         <longProp name="ThreadGroup.end_time">1536050588000</longProp>
