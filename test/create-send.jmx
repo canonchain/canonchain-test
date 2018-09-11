@@ -16,7 +16,7 @@
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
         <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
-        <stringProp name="HTTPSampler.port">8765</stringProp>
+        <stringProp name="HTTPSampler.port">6765</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
         <stringProp name="HTTPSampler.contentEncoding"></stringProp>
         <stringProp name="HTTPSampler.path"></stringProp>
@@ -65,7 +65,7 @@
           </elementProp>
           <elementProp name="predictNum" elementType="Argument">
             <stringProp name="Argument.name">predictNum</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.value">5</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">线程1预测账户数量</stringProp>
           </elementProp>
@@ -279,7 +279,7 @@ vars.put(&quot;total_lines&quot;,String.valueOf(count));</stringProp>
                 <stringProp name="RegexExtractor.refname">to</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;account&quot;: &quot;(.+?)&quot;</stringProp>
                 <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default">error</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
                 <stringProp name="RegexExtractor.match_number">1</stringProp>
               </RegexExtractor>
               <hashTree/>
