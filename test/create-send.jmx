@@ -31,67 +31,67 @@
             <stringProp name="Argument.name">accountThreadNum</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程1线程数</stringProp>
+            <stringProp name="Argument.desc">create线程数</stringProp>
           </elementProp>
           <elementProp name="accountCycleTimes" elementType="Argument">
             <stringProp name="Argument.name">accountCycleTimes</stringProp>
             <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程1线程循环次数</stringProp>
+            <stringProp name="Argument.desc">create线程循环次数</stringProp>
           </elementProp>
           <elementProp name="filetext" elementType="Argument">
             <stringProp name="Argument.name">filetext</stringProp>
             <stringProp name="Argument.value">.\examples\accounts.txt</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程1账户写入的文件路径</stringProp>
+            <stringProp name="Argument.desc">create账户写入的文件路径</stringProp>
           </elementProp>
           <elementProp name="accountJson" elementType="Argument">
             <stringProp name="Argument.name">accountJson</stringProp>
             <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat\&quot;,\&quot;kdf_salt\&quot;:\&quot;C971B2EDC225BE556CE30EB876F76D1106CDC3ED33C930CEDF9DD4C4143AB177\&quot;,\&quot;iv\&quot;:\&quot;D36D2FF13F2ADFA0096CC6513137303C\&quot;,\&quot;ciphertext\&quot;:\&quot;76E3BCB1D3789C02262665EE53EB58130BE1931686E088F71611E6579C212A55\&quot;}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程1import文件</stringProp>
+            <stringProp name="Argument.desc"> import文件</stringProp>
           </elementProp>
           <elementProp name="from" elementType="Argument">
             <stringProp name="Argument.name">from</stringProp>
             <stringProp name="Argument.value">czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat</stringProp>
-            <stringProp name="Argument.desc">有金额的账户（为其他账户充值）</stringProp>
+            <stringProp name="Argument.desc">create 有金额的账户（为其他账户充值）</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="amount" elementType="Argument">
             <stringProp name="Argument.name">amount</stringProp>
             <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">线程1充值金额</stringProp>
+            <stringProp name="Argument.desc">create线程充值金额</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="predictNum" elementType="Argument">
             <stringProp name="Argument.name">predictNum</stringProp>
             <stringProp name="Argument.value">5</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程1预测账户数量</stringProp>
+            <stringProp name="Argument.desc">create预测账户数量</stringProp>
           </elementProp>
-          <elementProp name="sendThreadnum" elementType="Argument">
-            <stringProp name="Argument.name">sendThreadnum</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.desc">线程2线程数</stringProp>
+          <elementProp name="sendThreadNum" elementType="Argument">
+            <stringProp name="Argument.name">sendThreadNum</stringProp>
+            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.desc">send线程数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="sendCycletimes" elementType="Argument">
             <stringProp name="Argument.name">sendCycletimes</stringProp>
             <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.desc">线程2线程循环次数</stringProp>
+            <stringProp name="Argument.desc">send线程循环次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="sendCount" elementType="Argument">
-            <stringProp name="Argument.name">sendCount</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程2send循环次数</stringProp>
           </elementProp>
           <elementProp name="quantity" elementType="Argument">
             <stringProp name="Argument.name">quantity</stringProp>
             <stringProp name="Argument.value">0</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">线程2转账金额</stringProp>
+            <stringProp name="Argument.desc">send转账金额</stringProp>
+          </elementProp>
+          <elementProp name="predictCounts" elementType="Argument">
+            <stringProp name="Argument.name">predictCounts</stringProp>
+            <stringProp name="Argument.value">20</stringProp>
+            <stringProp name="Argument.desc">send预测线程总数</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
@@ -390,7 +390,7 @@ try{
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">${sendCycletimes}</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${sendThreadnum}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${sendThreadNum}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
         <longProp name="ThreadGroup.start_time">1536050588000</longProp>
         <longProp name="ThreadGroup.end_time">1536050588000</longProp>
@@ -399,6 +399,22 @@ try{
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.io.*;
+String predictCounts =  vars.get(&quot;predictCounts&quot;);
+String sendThreadNum =  vars.get(&quot;sendThreadNum&quot;);
+int a =  Integer.valueOf(predictCounts).intValue();
+int b = Integer.valueOf(sendThreadNum).intValue();
+int c = 0;
+c = (int) (a / b); 
+String s = String.valueOf(c);
+System.out.println(s);
+vars.put(&quot;sendCount&quot;,String.valueOf(s)); //存储value到变量sendCount</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
         <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">true</boolProp>
           <stringProp name="LoopController.loops">${sendCount}</stringProp>
