@@ -16,7 +16,7 @@
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
         <stringProp name="HTTPSampler.domain">127.0.0.1</stringProp>
-        <stringProp name="HTTPSampler.port">8765</stringProp>
+        <stringProp name="HTTPSampler.port">6765</stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
         <stringProp name="HTTPSampler.contentEncoding"></stringProp>
         <stringProp name="HTTPSampler.path"></stringProp>
@@ -95,7 +95,7 @@
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="account_create" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="account_create" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -199,7 +199,7 @@ if (c &lt; 0 ) {
 }
 String d = String.valueOf(c);
 System.out.println(d);
-vars.put(&quot;creatCount&quot;,String.valueOf(d)); //存储value到变量sendCount</stringProp>
+vars.put(&quot;creatCount&quot;,d); //存储value到变量sendCount</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
@@ -385,7 +385,7 @@ int c = 0;
 c = (int) (a / b); 
 String s = String.valueOf(c);
 System.out.println(s);
-vars.put(&quot;sendCount&quot;,String.valueOf(s)); //存储value到变量sendCount</stringProp>
+vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
