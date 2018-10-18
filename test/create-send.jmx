@@ -47,31 +47,31 @@
           </elementProp>
           <elementProp name="accountJson" elementType="Argument">
             <stringProp name="Argument.name">accountJson</stringProp>
-            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat\&quot;,\&quot;kdf_salt\&quot;:\&quot;C971B2EDC225BE556CE30EB876F76D1106CDC3ED33C930CEDF9DD4C4143AB177\&quot;,\&quot;iv\&quot;:\&quot;D36D2FF13F2ADFA0096CC6513137303C\&quot;,\&quot;ciphertext\&quot;:\&quot;76E3BCB1D3789C02262665EE53EB58130BE1931686E088F71611E6579C212A55\&quot;}</stringProp>
+            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_32J7AaMhk3dsmXVFyDoxaqbEm8QaL8LJvcrHHpU8kYFFDB5CcE\&quot;,\&quot;kdf_salt\&quot;:\&quot;AF58C55C52FEEB23B4966CED820DBF89DC2E06802909EA4DA7C95E23BC462C1D\&quot;,\&quot;iv\&quot;:\&quot;0B658267637B026E67A8EE9395FEE71D\&quot;,\&quot;ciphertext\&quot;:\&quot;E1A22E36D5DD02F5EB46AB3BBF44CE39FDE4D45D0C278DF69D0E6351593C244A\&quot;}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc"> import文件</stringProp>
           </elementProp>
           <elementProp name="from" elementType="Argument">
             <stringProp name="Argument.name">from</stringProp>
-            <stringProp name="Argument.value">czr_3jzwa1n6onrayxibnkkd5w6y8dtk9fry73nfa7bnmrmmddm3nrtsau59dpat</stringProp>
+            <stringProp name="Argument.value">czr_32J7AaMhk3dsmXVFyDoxaqbEm8QaL8LJvcrHHpU8kYFFDB5CcE</stringProp>
             <stringProp name="Argument.desc">create 有金额的账户（为其他账户充值）</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="amount" elementType="Argument">
             <stringProp name="Argument.name">amount</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
+            <stringProp name="Argument.value">1000000000000000000</stringProp>
             <stringProp name="Argument.desc">create线程充值金额</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="predictNum" elementType="Argument">
-            <stringProp name="Argument.name">predictNum</stringProp>
-            <stringProp name="Argument.value">5</stringProp>
+          <elementProp name="accountPredictNum" elementType="Argument">
+            <stringProp name="Argument.name">accountPredictNum</stringProp>
+            <stringProp name="Argument.value">2000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">create预测账户数量</stringProp>
           </elementProp>
           <elementProp name="sendThreadNum" elementType="Argument">
             <stringProp name="Argument.name">sendThreadNum</stringProp>
-            <stringProp name="Argument.value">2</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.desc">send线程数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -81,16 +81,15 @@
             <stringProp name="Argument.desc">send线程循环次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="quantity" elementType="Argument">
-            <stringProp name="Argument.name">quantity</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">send转账金额</stringProp>
-          </elementProp>
           <elementProp name="predictCounts" elementType="Argument">
             <stringProp name="Argument.name">predictCounts</stringProp>
-            <stringProp name="Argument.value">20</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
             <stringProp name="Argument.desc">send预测线程总数</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="amount_random" elementType="Argument">
+            <stringProp name="Argument.name">amount_random</stringProp>
+            <stringProp name="Argument.value">${__Random(1,1000,test_send_amount)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -151,150 +150,128 @@
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
-          <stringProp name="WhileController.condition">${__jexl3(${__BeanShell(${predictNum}-${total_lines},)}&gt;0,aa)}</stringProp>
-        </WhileController>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_totallines" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+// 传入jmeter 变量 filetext  ,使用java变量 filePath接收
+String  filePath = vars.get(&quot;filetext&quot;);
+int count = 0;
+try{
+    File file = new File(filePath);
+    // 如果文件不存在就新建
+    if (!file.exists())
+    { 
+        file.createNewFile();
+    }  
+    // 读文件
+    BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
+    // 循环获取文件行数
+    while ((str=bufferedReader.readLine())!=null)
+    { 
+        count = count + 1;
+    }
+    bufferedReader.close(); 
+
+}catch(IOException e)
+{
+    e.printStackTrace();
+}
+//文件行数java变量传给jmeter变量total_lines
+vars.put(&quot;total_lines&quot;,String.valueOf(count));</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_creatCount" enabled="true">
+          <stringProp name="BeanShellSampler.query">import java.io.*;
+String accountPredictNum =  vars.get(&quot;accountPredictNum&quot;);
+String total_lines =  vars.get(&quot;total_lines&quot;);
+int a =  Integer.valueOf(accountPredictNum).intValue();
+int b = Integer.valueOf(total_lines).intValue();
+int c = 0;
+c = (int) (a - b); 
+if (c &lt; 0 ) {
+	break;
+}
+String d = String.valueOf(c);
+System.out.println(d);
+vars.put(&quot;creatCount&quot;,d); //存储value到变量sendCount</stringProp>
+          <stringProp name="BeanShellSampler.filename"></stringProp>
+          <stringProp name="BeanShellSampler.parameters"></stringProp>
+          <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+        </BeanShellSampler>
+        <hashTree/>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
+          <boolProp name="LoopController.continue_forever">true</boolProp>
+          <stringProp name="LoopController.loops">${creatCount}</stringProp>
+        </LoopController>
         <hashTree>
-          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_totallines" enabled="true">
-            <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-// 传入jmeter 变量 filetext  ,使用java变量 filePath接收
-String  filePath = vars.get(&quot;filetext&quot;);
-int count = 0;
-try{
-    File file = new File(filePath);
-    // 如果文件不存在就新建
-    if (!file.exists())
-    { 
-        file.createNewFile();
-    }  
-    // 读文件
-    BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
-    // 循环获取文件行数
-    while ((str=bufferedReader.readLine())!=null)
-    { 
-        count = count + 1;
-    }
-    bufferedReader.close(); 
-
-}catch(IOException e)
-{
-    e.printStackTrace();
-}
-//文件行数java变量传给jmeter变量total_lines
-vars.put(&quot;total_lines&quot;,String.valueOf(count));</stringProp>
-            <stringProp name="BeanShellSampler.filename"></stringProp>
-            <stringProp name="BeanShellSampler.parameters"></stringProp>
-            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-          </BeanShellSampler>
-          <hashTree/>
-          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_number" enabled="true">
-            <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-// 传入jmeter 变量 filetext  ,使用java变量 filePath接收
-String  filePath = vars.get(&quot;filetext&quot;);
-int count = 0;
-try{
-    File file = new File(filePath);
-    // 如果文件不存在就新建
-    if (!file.exists())
-    { 
-        file.createNewFile();
-    }  
-    // 读文件
-    BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
-    // 循环获取文件行数
-    while ((str=bufferedReader.readLine())!=null)
-    { 
-        count = count + 1;
-    }
-    bufferedReader.close(); 
-
-}catch(IOException e)
-{
-    e.printStackTrace();
-}
-//文件行数java变量传给jmeter变量total_lines
-vars.put(&quot;total_lines&quot;,String.valueOf(count));</stringProp>
-            <stringProp name="BeanShellSampler.filename"></stringProp>
-            <stringProp name="BeanShellSampler.parameters"></stringProp>
-            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-          </BeanShellSampler>
-          <hashTree/>
-          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="如果（If）控制器" enabled="true">
-            <stringProp name="IfController.condition">${__jexl3(${total_lines}&lt;${predictNum},aa)}</stringProp>
-            <boolProp name="IfController.evaluateAll">false</boolProp>
-            <boolProp name="IfController.useExpression">true</boolProp>
-          </IfController>
-          <hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account{注册" enabled="true">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&#xd;
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account{注册" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
 &quot;action&quot;:&quot;account_create&quot;,&#xd;
 &quot;password&quot;:&quot;${password}&quot;&#xd;
 }</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path"></stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV 1" enabled="true">
-                <stringProp name="filename">create.txt</stringProp>
-                <stringProp name="fileEncoding">utf-8</stringProp>
-                <stringProp name="variableNames">password</stringProp>
-                <boolProp name="ignoreFirstLine">false</boolProp>
-                <stringProp name="delimiter">,</stringProp>
-                <boolProp name="quotedData">false</boolProp>
-                <boolProp name="recycle">true</boolProp>
-                <boolProp name="stopThread">false</boolProp>
-                <stringProp name="shareMode">shareMode.all</stringProp>
-              </CSVDataSet>
-              <hashTree/>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="提取account" enabled="true">
-                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-                <stringProp name="RegexExtractor.refname">to</stringProp>
-                <stringProp name="RegexExtractor.regex">&quot;account&quot;: &quot;(.+?)&quot;</stringProp>
-                <stringProp name="RegexExtractor.template">$1$</stringProp>
-                <stringProp name="RegexExtractor.default"></stringProp>
-                <stringProp name="RegexExtractor.match_number">1</stringProp>
-              </RegexExtractor>
-              <hashTree/>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-                <collectionProp name="Asserion.test_strings">
-                  <stringProp name="-1159553641"> &quot;account&quot;</stringProp>
-                </collectionProp>
-                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-                <boolProp name="Assertion.assume_success">false</boolProp>
-                <intProp name="Assertion.test_type">2</intProp>
-              </ResponseAssertion>
-              <hashTree/>
-            </hashTree>
-            <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
-              <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path"></stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV 1" enabled="true">
+              <stringProp name="filename">create.txt</stringProp>
+              <stringProp name="fileEncoding">utf-8</stringProp>
+              <stringProp name="variableNames">password</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <stringProp name="delimiter">,</stringProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="提取account" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">to</stringProp>
+              <stringProp name="RegexExtractor.regex">&quot;account&quot;: &quot;(.+?)&quot;</stringProp>
+              <stringProp name="RegexExtractor.template">$1$</stringProp>
+              <stringProp name="RegexExtractor.default"></stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-1159553641"> &quot;account&quot;</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
+          <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
+            <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -321,18 +298,18 @@ try{
     e.printStackTrace();
 }
 </stringProp>
-              <stringProp name="BeanShellSampler.filename"></stringProp>
-              <stringProp name="BeanShellSampler.parameters"></stringProp>
-              <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
-            </BeanShellSampler>
-            <hashTree/>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="send" enabled="true">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&#xd;
+            <stringProp name="BeanShellSampler.filename"></stringProp>
+            <stringProp name="BeanShellSampler.parameters"></stringProp>
+            <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
+          </BeanShellSampler>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="send" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
         &quot;action&quot;: &quot;send&quot;,&#xd;
         &quot;from&quot;: &quot;${from}&quot;,&#xd;
         &quot;to&quot;: &quot;${to}&quot;,&#xd;
@@ -340,47 +317,46 @@ try{
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;&#xd;
         }</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path"></stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config " enabled="true">
-                <stringProp name="delimiter">,</stringProp>
-                <stringProp name="fileEncoding">utf-8</stringProp>
-                <stringProp name="filename">create.txt</stringProp>
-                <boolProp name="ignoreFirstLine">false</boolProp>
-                <boolProp name="quotedData">false</boolProp>
-                <boolProp name="recycle">true</boolProp>
-                <stringProp name="shareMode">shareMode.all</stringProp>
-                <boolProp name="stopThread">false</boolProp>
-                <stringProp name="variableNames">password</stringProp>
-              </CSVDataSet>
-              <hashTree/>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-                <collectionProp name="Asserion.test_strings">
-                  <stringProp name="-1275810857">&quot;block&quot;</stringProp>
-                </collectionProp>
-                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-                <boolProp name="Assertion.assume_success">false</boolProp>
-                <intProp name="Assertion.test_type">2</intProp>
-              </ResponseAssertion>
-              <hashTree/>
-            </hashTree>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.domain"></stringProp>
+            <stringProp name="HTTPSampler.port"></stringProp>
+            <stringProp name="HTTPSampler.protocol"></stringProp>
+            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+            <stringProp name="HTTPSampler.path"></stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+            <stringProp name="HTTPSampler.response_timeout"></stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config " enabled="true">
+              <stringProp name="delimiter">,</stringProp>
+              <stringProp name="fileEncoding">utf-8</stringProp>
+              <stringProp name="filename">create.txt</stringProp>
+              <boolProp name="ignoreFirstLine">false</boolProp>
+              <boolProp name="quotedData">false</boolProp>
+              <boolProp name="recycle">true</boolProp>
+              <stringProp name="shareMode">shareMode.all</stringProp>
+              <boolProp name="stopThread">false</boolProp>
+              <stringProp name="variableNames">password</stringProp>
+            </CSVDataSet>
+            <hashTree/>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-1275810857">&quot;block&quot;</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">2</intProp>
+            </ResponseAssertion>
+            <hashTree/>
           </hashTree>
         </hashTree>
       </hashTree>
@@ -399,7 +375,7 @@ try{
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="true">
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_sendCount" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.io.*;
 String predictCounts =  vars.get(&quot;predictCounts&quot;);
 String sendThreadNum =  vars.get(&quot;sendThreadNum&quot;);
@@ -409,7 +385,7 @@ int c = 0;
 c = (int) (a / b); 
 String s = String.valueOf(c);
 System.out.println(s);
-vars.put(&quot;sendCount&quot;,String.valueOf(s)); //存储value到变量sendCount</stringProp>
+vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
@@ -420,20 +396,20 @@ vars.put(&quot;sendCount&quot;,String.valueOf(s)); //存储value到变量sendCou
           <stringProp name="LoopController.loops">${sendCount}</stringProp>
         </LoopController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="sendd${__CSVRead(${filetext},)}" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="advance_gen_block" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
                 <elementProp name="" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
                   <stringProp name="Argument.value">{&#xd;
-        &quot;action&quot;: &quot;send&quot;,&#xd;
-        &quot;from&quot;: &quot;${fromm}&quot;,&#xd;
-        &quot;to&quot;: &quot;${too}&quot;,&#xd;
-        &quot;amount&quot;: &quot;${quantity}&quot;,&#xd;
+        &quot;action&quot;:&quot;advance_gen_block&quot;,&#xd;
+        &quot;from&quot;:&quot;${fromm}&quot;,&#xd;
+        &quot;to&quot;:&quot;${reach}&quot;,&#xd;
+        &quot;amount&quot;: &quot;${__Random(1,1000,test_send_amount)}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;&#xd;
-        }</stringProp>
+}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                 </elementProp>
               </collectionProp>
@@ -465,10 +441,10 @@ vars.put(&quot;sendCount&quot;,String.valueOf(s)); //存储value到变量sendCou
               <stringProp name="shareMode">shareMode.all</stringProp>
             </CSVDataSet>
             <hashTree/>
-            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="too" enabled="true">
+            <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="to" enabled="true">
               <stringProp name="filename">${filetext}</stringProp>
               <stringProp name="fileEncoding">utf-8</stringProp>
-              <stringProp name="variableNames">too</stringProp>
+              <stringProp name="variableNames">reach</stringProp>
               <boolProp name="ignoreFirstLine">false</boolProp>
               <stringProp name="delimiter">,</stringProp>
               <boolProp name="quotedData">false</boolProp>
@@ -500,6 +476,34 @@ vars.put(&quot;sendCount&quot;,String.valueOf(s)); //存储value到变量sendCou
             <hashTree/>
           </hashTree>
         </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="send_advanceblocks" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+        &quot;action&quot;:&quot;send_advanceblocks&quot;&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree/>
       </hashTree>
       <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="察看结果树" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
