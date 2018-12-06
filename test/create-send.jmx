@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.2 r1790748">
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="测试计划" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -92,6 +92,12 @@
             <stringProp name="Argument.value">${__Random(1,1000,test_send_amount)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="account_delete" elementType="Argument">
+            <stringProp name="Argument.name">account_delete</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.desc">是否删除account文件（1为删除）</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -139,32 +145,44 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="1289414348">  &quot;success&quot;: &quot;1&quot;</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-          </ResponseAssertion>
-          <hashTree/>
-        </hashTree>
+        <hashTree/>
+        <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
+          <collectionProp name="Asserion.test_strings">
+            <stringProp name="1289414348">  &quot;success&quot;: &quot;1&quot;</stringProp>
+          </collectionProp>
+          <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+          <boolProp name="Assertion.assume_success">false</boolProp>
+          <intProp name="Assertion.test_type">16</intProp>
+          <stringProp name="Assertion.custom_message"></stringProp>
+        </ResponseAssertion>
+        <hashTree/>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_totallines" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-// 传入jmeter 变量 filetext  ,使用java变量 filePath接收
+// 传入jmeter 变量 filetext  ,使用java变量 filePath接收 filetext创建account的路径
 String  filePath = vars.get(&quot;filetext&quot;);
 int count = 0;
+int dele = Integer.parseInt(vars.get(&quot;account_delete&quot;));
 try{
+
     File file = new File(filePath);
+    //File dir = new File(filePath) 
+    //URL url = new URL(filePath)
+    //File dir = new File(url) : 
+    //dir.mkdir(): 新建目录
     // 如果文件不存在就新建
+    if (dele == 1)
+    {
+        file.delete();	
+    }   
     if (!file.exists())
     { 
-        file.createNewFile();
+        file.createNewFile();//新建文件
+    //  file.mkdir()    
+        
     }  
     // 读文件
     BufferedReader bufferedReader=new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
@@ -188,7 +206,7 @@ vars.put(&quot;total_lines&quot;,String.valueOf(count));</stringProp>
         <hashTree/>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="get_creatCount" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.io.*;
-String accountPredictNum =  vars.get(&quot;accountPredictNum&quot;);
+String accountPredictNum =  vars.get(&quot;accountPredictNum&quot;);//默认string
 String total_lines =  vars.get(&quot;total_lines&quot;);
 int a =  Integer.valueOf(accountPredictNum).intValue();
 int b = Integer.valueOf(total_lines).intValue();
@@ -267,6 +285,7 @@ vars.put(&quot;creatCount&quot;,d); //存储value到变量sendCount</stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
               <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
@@ -355,6 +374,7 @@ try{
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
               <intProp name="Assertion.test_type">2</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
@@ -472,6 +492,7 @@ vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
               <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
             </ResponseAssertion>
             <hashTree/>
           </hashTree>
@@ -545,7 +566,7 @@ vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
         <stringProp name="filename"></stringProp>
       </ResultCollector>
       <hashTree/>
-      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="聚合报告" enabled="true">
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="聚合报告---${__machineIP()}" enabled="true">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -586,9 +607,5 @@ vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>
-    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="工作台" enabled="true">
-      <boolProp name="WorkBench.save">true</boolProp>
-    </WorkBench>
-    <hashTree/>
   </hashTree>
 </jmeterTestPlan>
