@@ -105,12 +105,6 @@
             <stringProp name="Argument.desc">避免双花而生成的四个子账户</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="deleteAccountFileValue" elementType="Argument">
-            <stringProp name="Argument.name">deleteAccountFileValue</stringProp>
-            <stringProp name="Argument.value"></stringProp>
-            <stringProp name="Argument.desc">如果不需要删除accout文件，则设为0；</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
