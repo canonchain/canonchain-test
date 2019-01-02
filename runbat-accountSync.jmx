@@ -105,6 +105,12 @@
             <stringProp name="Argument.desc">避免双花而生成的四个子账户</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="deleteAccountFileValue" elementType="Argument">
+            <stringProp name="Argument.name">deleteAccountFileValue</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.desc">如果不需要删除accout文件，则设为0；</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -235,7 +241,7 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
         </BeanShellSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="accountCreateSync" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RemoteFirstAccountCreate" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -353,10 +359,7 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
           <hashTree/>
         </hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
-          <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-
+          <stringProp name="BeanShellSampler.query">import java.io.*;
 // 传入jmeter 变量 account  ,使用java变量 message接收
 String message= vars.get(&quot;remoteGenenisAccount&quot;);
 //vars.put(&quot;remoteGenenisAccount&quot;,message);
@@ -365,17 +368,24 @@ String filePath= vars.get(&quot;accountFilePath&quot;);
 try
 {
     File file = new File(filePath);
-    // 如果文件不存在,就新建一个文件
-    if (!file.exists())
+//如果文件不存在,就新建一个文件;如果这一步生成100个账号，则这个文件只记录最后一个账号
+    if(!file.delete())
+    {
+        System.out.println(&quot;Attention : File deletion failed!&quot;);
+    }	
+    
+    if (!(file.exists() &amp;&amp; file.isFile()))
     { 
         file.createNewFile();
     }
-    // 文件末尾追加写入文件  
-    //FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
-    //fos.write(message.getBytes());   
-    //fos.close();
-
-    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream((new FileOutputStream(filePath,true)));
+//文件末尾追加写入文件  
+//    FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
+//    fos.write(message.getBytes());   
+//    fos.close();
+// 追加写入
+//    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream((new FileOutputStream(filePath,true)));
+//不追加写入
+    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream((new FileOutputStream(filePath)));
     bufferedOutputStream.write(message.getBytes());
     bufferedOutputStream.close();    
 }
@@ -448,7 +458,7 @@ catch(IOException e)
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="account_create" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="AccountCreateSync" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -633,31 +643,6 @@ vars.put(&quot;createCount&quot;,d);
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
               <hashTree/>
-              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="false">
-                <boolProp name="resetInterpreter">false</boolProp>
-                <stringProp name="parameters"></stringProp>
-                <stringProp name="filename"></stringProp>
-                <stringProp name="script">/*import org.JSON.*;
-String response = prev.getResponseDataAsString();//获取响应结果
-JSONObject jsonObject = new JSONObject(response);
-JSONArray jsonArray =  jsonObject.getJSONArray(&quot;assertionResult&quot;);
-JSONObject failureD = jsonArray.getJSONobject(&quot;failure&quot;);
-String judgeFeature = failureD.getString(&quot;failureD&quot;);
-if(judgeFeature == &quot;ture&quot;)
-{
-	vars.put(&quot;to&quot;,null);	
-}*/
-
-String toAccount = vars.get(&quot;to&quot;);
-int toAccountDefaultValue = Integer.parseInt(toAccount);
-if (toAccountDefaultValue == 0)
-{
-//    vars.get(&quot;createCount&quot;,0);
-    break;
-}
-</stringProp>
-              </BeanShellPostProcessor>
-              <hashTree/>
             </hashTree>
             <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
               <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
@@ -684,7 +669,6 @@ try
     bufferedOutputStream.write(&quot;\n&quot;.getBytes());
     bufferedOutputStream.write(message.getBytes());
     bufferedOutputStream.close();   
-
 }
 catch(IOException e)
 {
