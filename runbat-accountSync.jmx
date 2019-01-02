@@ -360,9 +360,10 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
         </hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.io.*;
+//import org.apache.log4j.Logger;
 // 传入jmeter 变量 account  ,使用java变量 message接收
 String message= vars.get(&quot;remoteGenenisAccount&quot;);
-//vars.put(&quot;remoteGenenisAccount&quot;,message);
+//    vars.put(&quot;remoteGenenisAccount&quot;,message);
 String filePath= vars.get(&quot;accountFilePath&quot;);
 
 try
@@ -372,12 +373,16 @@ try
     if(!file.delete())
     {
         System.out.println(&quot;Attention : File deletion failed!&quot;);
+//在jmeter的/bin目录下会生成jmeter.log日志；
+//将日志参数设为 log_level.jmeter=ERROR ，log_level.jmeter.junit=DEBUG即可；
+//        log.error(&quot;Attention : File deletion failed!&quot;);
     }	
-    
+
     if (!(file.exists() &amp;&amp; file.isFile()))
     { 
         file.createNewFile();
     }
+
 //文件末尾追加写入文件  
 //    FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
 //    fos.write(message.getBytes());   
