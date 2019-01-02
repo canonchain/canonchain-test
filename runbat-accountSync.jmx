@@ -65,7 +65,7 @@
           </elementProp>
           <elementProp name="accountCreateNum" elementType="Argument">
             <stringProp name="Argument.name">accountCreateNum</stringProp>
-            <stringProp name="Argument.value">10000</stringProp>
+            <stringProp name="Argument.value">500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">account_create 生成账户数量</stringProp>
           </elementProp>
@@ -83,7 +83,7 @@
           </elementProp>
           <elementProp name="sendTradeCounts" elementType="Argument">
             <stringProp name="Argument.name">sendTradeCounts</stringProp>
-            <stringProp name="Argument.value">250000</stringProp>
+            <stringProp name="Argument.value">180000</stringProp>
             <stringProp name="Argument.desc">send交易次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -235,11 +235,11 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
         </BeanShellSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="accountCreateSync" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="accountCreateSync" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">500</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -248,6 +248,7 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <longProp name="ThreadGroup.start_time">1543805857000</longProp>
         <longProp name="ThreadGroup.end_time">1543805857000</longProp>
+        <boolProp name="ThreadGroup.delayedStart">true</boolProp>
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="true">
@@ -351,18 +352,11 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
-          <boolProp name="displayJMeterProperties">false</boolProp>
-          <boolProp name="displayJMeterVariables">true</boolProp>
-          <boolProp name="displaySystemProperties">false</boolProp>
-        </DebugSampler>
-        <hashTree/>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
           <stringProp name="BeanShellSampler.query">import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
+
 // 传入jmeter 变量 account  ,使用java变量 message接收
 String message= vars.get(&quot;remoteGenenisAccount&quot;);
 //vars.put(&quot;remoteGenenisAccount&quot;,message);
@@ -403,7 +397,8 @@ catch(IOException e)
         &quot;amount&quot;: &quot;${initAmount}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;need_wait&quot;:&quot;true&quot;&#xd;
+        &quot;need_wait&quot;:&quot;true&quot;,&#xd;
+        &quot;gas&quot;:&quot;0&quot;&#xd;
         }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -666,6 +661,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
+
 // 传入jmeter 变量 account  ,使用java变量 message接收
 String message= vars.get(&quot;to&quot;);
 String filePath= vars.get(&quot;accountFilePath&quot;);
@@ -673,11 +669,12 @@ String filePath= vars.get(&quot;accountFilePath&quot;);
 try
 {
     File file = new File(filePath);
-    // 文件末尾追加写入文件  
+// 文件末尾追加写入文件  
     FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
-     fos.write(&quot;\n&quot;.getBytes());
-     fos.write(message.getBytes());     
-     fos.close();
+    fos.write(&quot;\n&quot;.getBytes());
+    fos.write(message.getBytes());     
+    fos.close();
+//  log.error(&quot;failed to close file!&quot;);
 }
 catch(IOException e)
 {
@@ -699,11 +696,12 @@ catch(IOException e)
         &quot;action&quot;: &quot;send&quot;,&#xd;
         &quot;from&quot;: &quot;${remoteGenenisAccount}&quot;,&#xd;
         &quot;to&quot;: &quot;${to}&quot;,&#xd;
-        &quot;amount&quot;: &quot;100000&quot;,&#xd;
+        &quot;amount&quot;: &quot;1000000&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;need_wait&quot;:&quot;true&quot;&#xd;
-        }</stringProp>
+        &quot;need_wait&quot;:&quot;true&quot;,&#xd;
+        &quot;gas&quot;:&quot;0&quot;&#xd;
+}</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
                 </collectionProp>
@@ -736,13 +734,15 @@ try
     File file = new File(filePath);
     // 读文件
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
-    // 循环获取文件行数
-    String str = null;
-    //读取remoteGenesisiAccount;
-   
+    //读取第一行账号作为remoteGenesisiAccount;
+    int LineExpNumber = 0;
     LineNumberReader reader = new LineNumberReader(bufferedReader);
-    String firstLine = reader.readLine();
-    vars.put(&quot;remoteGenenisAccount&quot;,firstLine);
+    if (LineExpNUmber == 0)
+    {
+        String firstLine = reader.readLine();
+        vars.put(&quot;remoteGenenisAccount&quot;,firstLine);	
+    } 
+    bufferedReader.close();
 }
 catch(IOException e)
 {
@@ -773,15 +773,10 @@ catch(IOException e)
               </ResponseAssertion>
               <hashTree/>
             </hashTree>
-            <IfController guiclass="IfControllerPanel" testclass="IfController" testname="ifController" enabled="false">
-              <stringProp name="IfController.condition">${to}!=0</stringProp>
-              <boolProp name="IfController.evaluateAll">false</boolProp>
-            </IfController>
-            <hashTree/>
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="send" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="send" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -828,7 +823,8 @@ catch(ArithmeticException e)
 
 String s = String.valueOf(c);
 System.out.println(s);
-vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
+//存储value到变量sendCount
+vars.put(&quot;sendCount&quot;,s); </stringProp>
             <stringProp name="BeanShellSampler.filename"></stringProp>
             <stringProp name="BeanShellSampler.parameters">${sendTradeCounts}</stringProp>
             <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
@@ -909,86 +905,6 @@ vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
               </CSVDataSet>
               <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response assert" enabled="true">
-                <collectionProp name="Asserion.test_strings">
-                  <stringProp name="-1275810857">&quot;block&quot;</stringProp>
-                </collectionProp>
-                <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-                <boolProp name="Assertion.assume_success">false</boolProp>
-                <intProp name="Assertion.test_type">16</intProp>
-                <stringProp name="Assertion.custom_message"></stringProp>
-              </ResponseAssertion>
-              <hashTree/>
-            </hashTree>
-            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="advance_gen_block" enabled="false">
-              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
-              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
-                <collectionProp name="Arguments.arguments">
-                  <elementProp name="" elementType="HTTPArgument">
-                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                    <stringProp name="Argument.value">{&#xd;
-        &quot;action&quot;:&quot;advance_gen_block&quot;,&#xd;
-        &quot;from&quot;:&quot;${fromm}&quot;,&#xd;
-        &quot;to&quot;:&quot;${reach}&quot;,&#xd;
-        &quot;amount&quot;: &quot;${__Random(1,1000,test_send_amount)}&quot;,&#xd;
-        &quot;password&quot;: &quot;${password}&quot;,&#xd;
-        &quot;data&quot;: &quot;&quot;&#xd;
-}</stringProp>
-                    <stringProp name="Argument.metadata">=</stringProp>
-                  </elementProp>
-                </collectionProp>
-              </elementProp>
-              <stringProp name="HTTPSampler.domain"></stringProp>
-              <stringProp name="HTTPSampler.port"></stringProp>
-              <stringProp name="HTTPSampler.protocol"></stringProp>
-              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-              <stringProp name="HTTPSampler.path"></stringProp>
-              <stringProp name="HTTPSampler.method">POST</stringProp>
-              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-              <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            </HTTPSamplerProxy>
-            <hashTree>
-              <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="from" enabled="true">
-                <stringProp name="filename">${filetext}</stringProp>
-                <stringProp name="fileEncoding">utf-8</stringProp>
-                <stringProp name="variableNames">fromm</stringProp>
-                <boolProp name="ignoreFirstLine">false</boolProp>
-                <stringProp name="delimiter">,</stringProp>
-                <boolProp name="quotedData">false</boolProp>
-                <boolProp name="recycle">true</boolProp>
-                <boolProp name="stopThread">false</boolProp>
-                <stringProp name="shareMode">shareMode.all</stringProp>
-              </CSVDataSet>
-              <hashTree/>
-              <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="to" enabled="true">
-                <stringProp name="filename">${filetext}</stringProp>
-                <stringProp name="fileEncoding">utf-8</stringProp>
-                <stringProp name="variableNames">reach</stringProp>
-                <boolProp name="ignoreFirstLine">false</boolProp>
-                <stringProp name="delimiter">,</stringProp>
-                <boolProp name="quotedData">false</boolProp>
-                <boolProp name="recycle">true</boolProp>
-                <boolProp name="stopThread">false</boolProp>
-                <stringProp name="shareMode">shareMode.all</stringProp>
-              </CSVDataSet>
-              <hashTree/>
-              <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="password" enabled="true">
-                <stringProp name="filename">create.txt</stringProp>
-                <stringProp name="fileEncoding">utf-8</stringProp>
-                <stringProp name="variableNames">password</stringProp>
-                <boolProp name="ignoreFirstLine">false</boolProp>
-                <stringProp name="delimiter">,</stringProp>
-                <boolProp name="quotedData">false</boolProp>
-                <boolProp name="recycle">true</boolProp>
-                <boolProp name="stopThread">false</boolProp>
-                <stringProp name="shareMode">shareMode.all</stringProp>
-              </CSVDataSet>
-              <hashTree/>
-              <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="响应断言" enabled="true">
                 <collectionProp name="Asserion.test_strings">
                   <stringProp name="-1275810857">&quot;block&quot;</stringProp>
                 </collectionProp>
@@ -1097,12 +1013,13 @@ vars.put(&quot;sendCount&quot;,s); //存储value到变量sendCount</stringProp>
         <longProp name="ThreadGroup.end_time">1543805857000</longProp>
       </PostThreadGroup>
       <hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="closeBat" enabled="true">
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="closeBat" enabled="false">
           <stringProp name="TestPlan.comments">using Beanshell Scripts to close nodes</stringProp>
           <stringProp name="BeanShellSampler.query">import java.io.*;
 //String cmdd = &quot;cmd.exe /c start wmic process where name=&apos;canonchain.exe&apos; terminate&quot;;
+//要关闭窗口直接改为cmd /k，若程序运行异常，则无法关闭窗口
 String cmdd = &quot;cmd.exe /K start wmic process where name=&apos;canonchain.exe&apos; terminate&quot;;
-//要关闭窗口直接改为cmd /k
+
 try
 {
 	Runtime.getRuntime().exec(cmdd);	
@@ -1116,7 +1033,7 @@ catch(IOException e)
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="HTTP请求" enabled="true">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="closeBat" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
@@ -1134,7 +1051,7 @@ catch(IOException e)
           <stringProp name="HTTPSampler.protocol"></stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path"></stringProp>
-          <stringProp name="HTTPSampler.method">GET</stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
