@@ -105,6 +105,12 @@
             <stringProp name="Argument.desc">避免双花而生成的四个子账户</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="accountFileDeletion" elementType="Argument">
+            <stringProp name="Argument.name">accountFileDeletion</stringProp>
+            <stringProp name="Argument.value">0</stringProp>
+            <stringProp name="Argument.desc">0 删除文件；1 不删除文件</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
@@ -136,6 +142,12 @@ String keyStore = new String();
 String[] valueStore  = new String[]{};
 int count=0;
 String delPathStore = new String();
+String accountFileDeletion = vars.get(&quot;accountFileDeletion&quot;);
+int accountFileDeletionTag =  Integer.valueOf(accountFileDeletion).intValue();
+if (accountFileDeletionTag == 1)
+{
+    file.renameTo()		
+}
 try
 {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),&quot;utf-8&quot;));
@@ -171,11 +183,11 @@ catch(IOException e)
 
 class RunBat
 {
-    String cmd;
-    String [] cmdArray = new String[]{};
-    String cmdPrefix = &quot;cmd /K start &quot;; //&quot;cmd /k start&quot; : 打开cmd窗口后执行start后的指令，执行完不关闭窗口
-    String switchedPath = new String();
-    String delPath = new String();  
+    private String cmd;
+    private String [] cmdArray = new String[]{};
+    private String cmdPrefix = &quot;cmd /K start &quot;; //&quot;cmd /k start&quot; : 打开cmd窗口后执行start后的指令，执行完不关闭窗口
+    private String switchedPath = new String();
+    private String delPath = new String();  
      
     void runExec(String cmd,String switchedPath)
     {
