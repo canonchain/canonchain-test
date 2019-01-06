@@ -105,16 +105,16 @@
             <stringProp name="Argument.desc">避免双花而生成的四个子账户</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="accountFileDeletion" elementType="Argument">
-            <stringProp name="Argument.name">accountFileDeletion</stringProp>
-            <stringProp name="Argument.value">0</stringProp>
-            <stringProp name="Argument.desc">0 删除文件；1 不删除文件</stringProp>
+          <elementProp name="accountAndDataFileDeletion" elementType="Argument">
+            <stringProp name="Argument.name">accountAndDataFileDeletion</stringProp>
+            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.desc">1 ：不清除数据</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setBatRunning" enabled="false">
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setBatRunning" enabled="true">
         <stringProp name="TestPlan.comments">using BeanShell Sampler to invoke .bat files</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
@@ -142,12 +142,7 @@ String keyStore = new String();
 String[] valueStore  = new String[]{};
 int count=0;
 String delPathStore = new String();
-String accountFileDeletion = vars.get(&quot;accountFileDeletion&quot;);
-int accountFileDeletionTag =  Integer.valueOf(accountFileDeletion).intValue();
-if (accountFileDeletionTag == 1)
-{
-    file.renameTo()		
-}
+
 try
 {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),&quot;utf-8&quot;));
@@ -187,8 +182,10 @@ class RunBat
     private String [] cmdArray = new String[]{};
     private String cmdPrefix = &quot;cmd /K start &quot;; //&quot;cmd /k start&quot; : 打开cmd窗口后执行start后的指令，执行完不关闭窗口
     private String switchedPath = new String();
-    private String delPath = new String();  
-     
+    private String delPath = new String();
+    String accountAndDataFileDeletion = vars.get(&quot;accountAndDataFileDeletion&quot;);
+    int accountFileDeletionTag =  Integer.valueOf(accountAndDataFileDeletion).intValue();
+
     void runExec(String cmd,String switchedPath)
     {
         Runtime.getRuntime().exec(cmd,null,new File(switchedPath));//可以使用exec(new String[]{ },null,dir)进行改进
@@ -220,7 +217,12 @@ class RunBat
         this.cmdArray  = Arrays.copyOf(batAbsolutePath,batAbsolutePath.length);
         this.delPath = delPath;
         this.switchedPath = switchedPath;
-        runExec(this.delPath);
+	 
+        if (this.accountFileDeletionTag != 1)
+        {
+            runExec(this.delPath);	
+        }
+        
         try
         {
             for (String batAbsPath : this.cmdArray)
@@ -247,11 +249,11 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
         </BeanShellSampler>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RemoteFirstAccountCreate" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="RemoteFirstAccountCreate" enabled="false">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">500</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
         <stringProp name="ThreadGroup.num_threads">1</stringProp>
         <stringProp name="ThreadGroup.ramp_time">1</stringProp>
@@ -369,13 +371,12 @@ runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
 //import org.apache.log4j.Logger;
 // 传入jmeter 变量 account  ,使用java变量 message接收
 String message= vars.get(&quot;remoteGenenisAccount&quot;);
-//    vars.put(&quot;remoteGenenisAccount&quot;,message);
 String filePath= vars.get(&quot;accountFilePath&quot;);
 
 try
 {
     File file = new File(filePath);
-//如果文件不存在,就新建一个文件;如果这一步生成100个账号，则这个文件只记录最后一个账号
+//如果文件不存在,就新建一个文件;
     if(!file.delete())
     {
         System.out.println(&quot;Attention : File deletion failed!&quot;);
@@ -389,7 +390,7 @@ try
         file.createNewFile();
     }
 
-//文件末尾追加写入文件  
+//文件末尾追加写入文件;直接写入文件异常情况下会造成死锁；改成bufferedOutputStream方法
 //    FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
 //    fos.write(message.getBytes());   
 //    fos.close();
@@ -852,7 +853,8 @@ vars.put(&quot;sendCount&quot;,s); </stringProp>
         &quot;to&quot;:&quot;${reach}&quot;,&#xd;
         &quot;amount&quot;: &quot;${randomAmount}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
-        &quot;data&quot;: &quot;&quot;&#xd;
+        &quot;data&quot;: &quot;&quot;,&#xd;
+        &quot;gas&quot;:&quot;0&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
