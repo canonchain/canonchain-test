@@ -47,7 +47,7 @@
           </elementProp>
           <elementProp name="accountJson" elementType="Argument">
             <stringProp name="Argument.name">accountJson</stringProp>
-            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_33EuccjKjcZgwbHYp8eLhoFiaKGARVigZojeHzySD9fQ1ysd7u\&quot;,\&quot;kdf_salt\&quot;:\&quot;C750E3A05139CBBFFCD091C12EAC0A3C\&quot;,\&quot;iv\&quot;:\&quot;0AF671A5625276A2F63B9B2B70645EAE\&quot;,\&quot;ciphertext\&quot;:\&quot;F28C95573CBB65402EFDAD1B751A468C5FC1C68AEEBEB9707A2B5BABB7AD6F2D\&quot;}</stringProp>
+            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_33EuccjKjcZgwbHYp8eLhoFiaKGARVigZojeHzySD9fQ1ysd7u\&quot;,\&quot;kdf_salt\&quot;:\&quot;774DDE2B6D01D6A2B000BB42F8118E2C\&quot;,\&quot;iv\&quot;:\&quot;5EF469016DB117B4437FB46D37BFA925\&quot;,\&quot;ciphertext\&quot;:\&quot;2B9567F4184B4D0A4AD9D5A3BF94805662B562167AFBEC575B06C23F708F0CA0\&quot;}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">基因账户以及基因账户的加密信息</stringProp>
           </elementProp>
@@ -65,7 +65,7 @@
           </elementProp>
           <elementProp name="accountCreateNum" elementType="Argument">
             <stringProp name="Argument.name">accountCreateNum</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">10000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">account_create 生成账户数量</stringProp>
           </elementProp>
@@ -83,7 +83,7 @@
           </elementProp>
           <elementProp name="sendTradeCounts" elementType="Argument">
             <stringProp name="Argument.name">sendTradeCounts</stringProp>
-            <stringProp name="Argument.value">180000</stringProp>
+            <stringProp name="Argument.value">10000</stringProp>
             <stringProp name="Argument.desc">send交易次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -95,7 +95,7 @@
           </elementProp>
           <elementProp name="autoAssistConfigJsonFile" elementType="Argument">
             <stringProp name="Argument.name">autoAssistConfigJsonFile</stringProp>
-            <stringProp name="Argument.value">C:\config.json</stringProp>
+            <stringProp name="Argument.value">C:\configTest.json</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">自动化辅助JSON文件</stringProp>
           </elementProp>
@@ -740,15 +740,12 @@ try
     File file = new File(filePath);
     // 读文件
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
-    //读取第一行账号作为remoteGenesisiAccount;
-    int LineExpNumber = 0;
+    String str = null;
     LineNumberReader reader = new LineNumberReader(bufferedReader);
-    if (LineExpNUmber == 0)
-    {
-        String firstLine = reader.readLine();
-        vars.put(&quot;remoteGenenisAccount&quot;,firstLine);	
-    } 
+    String firstLine = reader.readLine();
+    vars.put(&quot;remoteGenenisAccount&quot;,firstLine);
     bufferedReader.close();
+    reader.close();
 }
 catch(IOException e)
 {
