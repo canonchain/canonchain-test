@@ -10,6 +10,8 @@ jar包使用方式 ：
   	 content : 需要抓取匹配的内容
 
 exe使用方式 ：
+
+    0. Jdk版本至少是1.8；Windows 64位操作系统
 	
     1. 打开cmd或者gitbash或者cygwin；
 
