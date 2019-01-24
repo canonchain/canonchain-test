@@ -1,46 +1,44 @@
 
-jar°üÊ¹ÓÃ·½Ê½ £º
+jaråŒ…ä½¿ç”¨æ–¹å¼ ï¼š
 	
-    1. ´ò¿ªcmd»òÕßgitbash»òÕßcygwin£»
+    1. æ‰“å¼€cmdæˆ–è€…gitbashæˆ–è€…cygwinï¼›
 
-    2. Windows :
-
-	µ÷ÓÃ·½Ê½ :
+    2. Windows è°ƒç”¨æ–¹å¼  :
 
 	java -jar contentCapture.jar .\test.txt content
 
 	java -jar contentCapture.jar D:\tmp\test.txt content
 
-         .\test.txt : ĞèÒª±»×¥È¡ÄÚÈİµÄÄ¿±êÎÄ¼şµÄÏà¶ÔÂ·¾¶  
+         .\test.txt : éœ€è¦è¢«æŠ“å–å†…å®¹çš„ç›®æ ‡æ–‡ä»¶çš„ç›¸å¯¹è·¯å¾„  
 
-  	 content : ĞèÒª×¥È¡Æ¥ÅäµÄÄÚÈİ
+  	 content : éœ€è¦æŠ“å–åŒ¹é…çš„å†…å®¹
 
-	Linux :
+       Linux è°ƒç”¨æ–¹å¼ :
 
 	java -jar contentCapture.jar ./test.txt content
 
 	java -jar contentCapture.jar /tmp/test.txt content
 
-         ./test.txt : ĞèÒª±»×¥È¡ÄÚÈİµÄÄ¿±êÎÄ¼şµÄÏà¶ÔÂ·¾¶  
+         ./test.txt : éœ€è¦è¢«æŠ“å–å†…å®¹çš„ç›®æ ‡æ–‡ä»¶çš„ç›¸å¯¹è·¯å¾„  
 
-  	 content : ĞèÒª×¥È¡Æ¥ÅäµÄÄÚÈİ
+  	 content : éœ€è¦æŠ“å–åŒ¹é…çš„å†…å®¹
 
-exeÊ¹ÓÃ·½Ê½ £º
+exeä½¿ç”¨æ–¹å¼ ï¼š
 
-    0. Jdk°æ±¾ÖÁÉÙÊÇ1.8£»Windows 64Î»²Ù×÷ÏµÍ³
+    0. Jdkç‰ˆæœ¬è‡³å°‘æ˜¯1.8ï¼›Windows 64ä½æ“ä½œç³»ç»Ÿ
 	
-    1. ´ò¿ªcmd»òÕßgitbash»òÕßcygwin£»
+    1. æ‰“å¼€cmdæˆ–è€…gitbashæˆ–è€…cygwinï¼›
 
-    2. ÔÚÏàÓ¦µÄÄ¿Â¼ÏÂµ÷ÓÃ·½Ê½£º
+    2. åœ¨ç›¸åº”çš„ç›®å½•ä¸‹è°ƒç”¨æ–¹å¼ï¼š
 
          contentCapture.exe test.txt content
 
-             test.txt : ĞèÒª±»×¥È¡ÄÚÈİµÄÄ¿±êÎÄ¼ş  
+             test.txt : éœ€è¦è¢«æŠ“å–å†…å®¹çš„ç›®æ ‡æ–‡ä»¶  
 
-             content : ĞèÒª×¥È¡Æ¥ÅäµÄÄÚÈİ
+             content : éœ€è¦æŠ“å–åŒ¹é…çš„å†…å®¹
 
-±¸×¢£º
+å¤‡æ³¨ï¼š
 
-    .exeÎÄ¼şÈôĞèÒªÔÚWindows 32Î»²Ù×÷ÏµÍ³ÉÏÖ´ĞĞ£¬¿ÉÒÔÀûÓÃÉÏÊöjar°üÉú³ÉÖ§³Ö32Î»µÄ.exeÎÄ¼ş
+    .exeæ–‡ä»¶è‹¥éœ€è¦åœ¨Windows 32ä½æ“ä½œç³»ç»Ÿä¸Šæ‰§è¡Œï¼Œå¯ä»¥åˆ©ç”¨ä¸Šè¿°jaråŒ…ç”Ÿæˆæ”¯æŒ32ä½çš„.exeæ–‡ä»¶
 
 	
