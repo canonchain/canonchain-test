@@ -3,9 +3,25 @@ jar包使用方式 ：
 	
     1. 打开cmd或者gitbash或者cygwin；
 
-    2. 调用方式 java -jar contentCapture.jar test.txt content
+    2. Windows :
 
-         test.txt : 需要被抓取内容的目标文件  
+	调用方式 :
+
+	java -jar contentCapture.jar .\test.txt content
+
+	java -jar contentCapture.jar D:\tmp\test.txt content
+
+         .\test.txt : 需要被抓取内容的目标文件的相对路径  
+
+  	 content : 需要抓取匹配的内容
+
+	Linux :
+
+	java -jar contentCapture.jar ./test.txt content
+
+	java -jar contentCapture.jar /tmp/test.txt content
+
+         ./test.txt : 需要被抓取内容的目标文件的相对路径  
 
   	 content : 需要抓取匹配的内容
 
