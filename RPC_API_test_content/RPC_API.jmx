@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.0 r1840935">
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.2 r1790748">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -42,13 +42,13 @@
           </elementProp>
           <elementProp name="accountFilePath" elementType="Argument">
             <stringProp name="Argument.name">accountFilePath</stringProp>
-            <stringProp name="Argument.value">D:\Program Files\jmeter\bin\examples\accounts.txt</stringProp>
+            <stringProp name="Argument.value">.\examples\accounts.txt</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">账号生成路径</stringProp>
           </elementProp>
           <elementProp name="passwordFilePath" elementType="Argument">
             <stringProp name="Argument.name">passwordFilePath</stringProp>
-            <stringProp name="Argument.value">D:\Program Files\jmeter\bin\examples\create.txt</stringProp>
+            <stringProp name="Argument.value">.\create.txt</stringProp>
             <stringProp name="Argument.desc">账号密码</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -78,6 +78,8 @@
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
+        <longProp name="ThreadGroup.start_time">1551407186000</longProp>
+        <longProp name="ThreadGroup.end_time">1551407186000</longProp>
       </ThreadGroup>
       <hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="1. genesisAccount_import" enabled="true">
@@ -159,7 +161,7 @@
             <intProp name="Assertion.test_type">16</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="false">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">account1</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;account&quot;:&quot;(.+?)&quot;</stringProp>
@@ -167,6 +169,12 @@
             <stringProp name="RegexExtractor.default"></stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">account1</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.account</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="3. send_block_1" enabled="true">
@@ -178,10 +186,10 @@
                 <stringProp name="Argument.value">{&#xd;
 &quot;action&quot;:&quot;send_block&quot;,&#xd;
 &quot;from&quot;:&quot;${genesisAccount}&quot;,&#xd;
-&quot;to&quot;:&quot;${acount1}&quot;,&#xd;
-&quot;amount&quot;:1000000,&#xd;
+&quot;to&quot;:&quot;${account1}&quot;,&#xd;
+&quot;amount&quot;:&quot;1000000&quot;,&#xd;
 &quot;password&quot;:&quot;${password}&quot;,&#xd;
-&quot;gas&quot;:1000,&#xd;
+&quot;gas&quot;:0&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -441,10 +449,10 @@
                 <stringProp name="Argument.value">{&#xd;
 &quot;action&quot;:&quot;send_block&quot;,&#xd;
 &quot;from&quot;:&quot;${genesisAccount}&quot;,&#xd;
-&quot;to&quot;:&quot;${acount2}&quot;,&#xd;
-&quot;amount&quot;:1000000,&#xd;
+&quot;to&quot;:&quot;${account2}&quot;,&#xd;
+&quot;amount&quot;:&quot;1000000&quot;,&#xd;
 &quot;password&quot;:&quot;${password}&quot;,&#xd;
-&quot;gas&quot;:1000,&#xd;
+&quot;gas&quot;:0&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -483,6 +491,46 @@
             <stringProp name="RegexExtractor.default"></stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
+          <hashTree/>
+        </hashTree>
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="4. block" enabled="true">
+          <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+            <collectionProp name="Arguments.arguments">
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">{&#xd;
+&quot;action&quot;:&quot;block&quot;,&#xd;
+&quot;hash&quot;:&quot;${account2Hash}&quot;	&#xd;
+}</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+              </elementProp>
+            </collectionProp>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain"></stringProp>
+          <stringProp name="HTTPSampler.port"></stringProp>
+          <stringProp name="HTTPSampler.protocol"></stringProp>
+          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.path"></stringProp>
+          <stringProp name="HTTPSampler.method">POST</stringProp>
+          <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+          <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+          <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
+        </HTTPSamplerProxy>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-1275810857">&quot;block&quot;</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.custom_message"></stringProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="10. blocks" enabled="true">
@@ -789,7 +837,7 @@
 &quot;from&quot;:&quot;${genesisAccount}&quot;,&#xd;
 &quot;to&quot;:&quot;${account3}&quot;,&#xd;
 &quot;amount&quot;:&quot;10000000&quot;,&#xd;
-&quot;gas&quot;:1000&#xd;
+&quot;gas&quot;:0&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -820,7 +868,7 @@
             <intProp name="Assertion.test_type">16</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="false">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
@@ -894,6 +942,13 @@ vars.put(&quot;work&quot;,workStr);
 </stringProp>
           </BeanShellPostProcessor>
           <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">hash;amount;previous;exec_timestamp;work</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.hash;$.amount;$.previous;$.exec_timestamp;$.work</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">0</stringProp>
+            <stringProp name="JSONPostProcessor.defaultValues">0;0;0;0;0</stringProp>
+          </JSONPostProcessor>
+          <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="18. sign_msg" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
@@ -905,7 +960,7 @@ vars.put(&quot;work&quot;,workStr);
 &quot;action&quot;:&quot;sign_msg&quot;,&#xd;
 &quot;public_key&quot;:&quot;${genesisAccount}&quot;,&#xd;
 &quot;password&quot;:&quot;${password}&quot;,&#xd;
-&quot;msg&quot;:&quot;${msg}&quot;&#xd;
+&quot;msg&quot;:&quot;${hash}&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -954,18 +1009,12 @@ vars.put(&quot;work&quot;,workStr);
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
 &quot;action&quot;: &quot;send_offline_block&quot;,&#xd;
-&quot;from&quot;:&quot;${from}&quot;,&#xd;
-&quot;to&quot;:&quot;${to}&quot;,&#xd;
+&quot;hash&quot;:&quot;${hash}&quot;,&#xd;
+&quot;from&quot;:&quot;${genesisAccount}&quot;,&#xd;
+&quot;to&quot;:&quot;${account3}&quot;,&#xd;
 &quot;amount&quot;:&quot;${amount}&quot;,&#xd;
-&quot;gas&quot;:&quot;${gas}&quot;,&#xd;
-&quot;data&quot;:&quot;${data}&quot;,&#xd;
+&quot;gas&quot;:0,&#xd;
 &quot;previous&quot;:&quot;${previous}&quot;,&#xd;
-&quot;parents&quot;:&quot;${parents}&quot;,&#xd;
-&quot;witness_list_block&quot;:&quot;${witness_list_block}&quot;,&#xd;
-&quot;witness_list&quot;:&quot;${witness_list}&quot;,&#xd;
-&quot;last_summary&quot;:&quot;${last_summary}&quot;,&#xd;
-&quot;last_summary_block&quot;:&quot;${last_summary_block}&quot;,&#xd;
-&quot;last_stable_block&quot;:&quot;${last_stable_block}&quot;,&#xd;
 &quot;exec_timestamp&quot;:&quot;${exec_timestamp}&quot;,&#xd;
 &quot;work&quot;:&quot;${work}&quot;,&#xd;
 &quot;signature&quot;:&quot;${signature}&quot;	&#xd;
@@ -1079,7 +1128,7 @@ vars.put(&quot;work&quot;,workStr);
             <intProp name="Assertion.test_type">16</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="true">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Regular Expression Extractor" enabled="false">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">last_stable_mci</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;last_stable_mci&quot;:&quot;(.+?)&quot;</stringProp>
@@ -1087,6 +1136,12 @@ vars.put(&quot;work&quot;,workStr);
             <stringProp name="RegexExtractor.default"></stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
+          <hashTree/>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">last_stable_mci</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.last_stable_mci</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="22. stable_blocks" enabled="true">
@@ -1256,7 +1311,7 @@ vars.put(&quot;work&quot;,workStr);
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&quot;action&quot;:&quot;account_remove&quot;,&#xd;
-&quot;account&quot;:&quot;${account1}&quot;&#xd;
+&quot;account&quot;:&quot;${account1}&quot;,&#xd;
 &quot;password&quot;:&quot;${password}&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -1280,7 +1335,7 @@ vars.put(&quot;work&quot;,workStr);
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="2101542903">&quot;code&quot;: 0</stringProp>
+              <stringProp name="67791721">&quot;code&quot;:0</stringProp>
             </collectionProp>
             <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
@@ -1368,94 +1423,85 @@ vars.put(&quot;work&quot;,workStr);
           </ResponseAssertion>
           <hashTree/>
         </hashTree>
-        <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
-        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>true</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-              <sentBytes>true</sentBytes>
-              <url>true</url>
-              <threadCounts>true</threadCounts>
-              <idleTime>true</idleTime>
-              <connectTime>true</connectTime>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-        </ResultCollector>
-        <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Test Group" enabled="true">
-        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
-        <boolProp name="ThreadGroup.scheduler">false</boolProp>
-        <stringProp name="ThreadGroup.duration"></stringProp>
-        <stringProp name="ThreadGroup.delay"></stringProp>
-      </ThreadGroup>
+      <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
       <hashTree/>
     </hashTree>
+    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="工作台" enabled="true">
+      <boolProp name="WorkBench.save">true</boolProp>
+    </WorkBench>
+    <hashTree/>
   </hashTree>
 </jmeterTestPlan>
