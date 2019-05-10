@@ -83,7 +83,7 @@
           </elementProp>
           <elementProp name="sendTradeCounts" elementType="Argument">
             <stringProp name="Argument.name">sendTradeCounts</stringProp>
-            <stringProp name="Argument.value">2000000</stringProp>
+            <stringProp name="Argument.value">10000</stringProp>
             <stringProp name="Argument.desc">send交易次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -107,14 +107,14 @@
           </elementProp>
           <elementProp name="accountAndDataFileDeletion" elementType="Argument">
             <stringProp name="Argument.name">accountAndDataFileDeletion</stringProp>
-            <stringProp name="Argument.value">1</stringProp>
+            <stringProp name="Argument.value">0</stringProp>
             <stringProp name="Argument.desc">1 ：不清除数据；0：清除数据</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setBatRunning" enabled="true">
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setBatRunning" enabled="false">
         <stringProp name="TestPlan.comments">using BeanShell Sampler to invoke .bat files</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
@@ -142,7 +142,7 @@ String keyStore = new String();
 String[] valueStore  = new String[]{};
 int count=0;
 String delPathStore = new String();
-
+String mvPathStore = new String();
 try
 {
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),&quot;utf-8&quot;));
@@ -165,6 +165,10 @@ try
             {
                 delPathStore = jsonObject.getString(&quot;delPath&quot;);
             }
+            if(key.equals(&quot;movePath&quot;))
+            {
+                mvPathStore = jsonObject.getString(&quot;movePath&quot;);
+            }
             //valueStore.add(value);
             count += 1;
         }
@@ -183,58 +187,52 @@ class RunBat
     private String cmdPrefix = &quot;cmd /K start &quot;; //&quot;cmd /k start&quot; : 打开cmd窗口后执行start后的指令，执行完不关闭窗口
     private String switchedPath = new String();
     private String delPath = new String();
+    private String mvPath = new String();
     String accountAndDataFileDeletion = vars.get(&quot;accountAndDataFileDeletion&quot;);
     int accountFileDeletionTag =  Integer.valueOf(accountAndDataFileDeletion).intValue();
 
     void runExec(String cmd,String switchedPath)
-    {
-        Runtime.getRuntime().exec(cmd,null,new File(switchedPath));//可以使用exec(new String[]{ },null,dir)进行改进
+    {  
         try
         {
-            TimeUnit.SECONDS.sleep(2);	
+            TimeUnit.SECONDS.sleep(10);	
         }
         catch(InterruptedException e)
         {
              e.printStackTrace();
-        }	
+        }
+        Runtime.getRuntime().exec(cmd,null,new File(switchedPath));//可以使用exec(new String[]{ },null,dir)进行改进	
     }
 
     void runExec(String cmd)
     {
         Runtime.getRuntime().exec(cmd);//可以使用exec(new String[]{ },null,dir)进行改进
-        try
-        {
-            TimeUnit.SECONDS.sleep(2);	
-        }
-        catch(InterruptedException e)
-        {
-             e.printStackTrace();
-        }	
     }    
     
-    void runMethod(String [] batAbsolutePath,String switchedPath,String delPath)
+    void runMethod(String [] batAbsolutePath,String switchedPath,String delPath,String mvPath)
     {
         this.cmdArray  = Arrays.copyOf(batAbsolutePath,batAbsolutePath.length);
         this.delPath = delPath;
         this.switchedPath = switchedPath;
-	 
+        this.mvPath = mvPath; 
         if (this.accountFileDeletionTag != 1)
         {
             runExec(this.delPath);
 //            log.info(&quot;Using ./bat to delete data files&quot;);
             System.out.println(&quot;Using ./bat to delete data files&quot;);	
         }
-        
+        runExec(this.mvPath);
+        System.out.println(&quot;moving canonchain.exe&amp;canonchain.pdb&quot;);
         try
         {
             for (String batAbsPath : this.cmdArray)
             {
                 if ((!batAbsPath.equals(this.delPath))&amp;&amp;(!batAbsPath.equals(this.switchedPath)))
                 {
+                    System.out.println(&quot;Running on step of &quot; + batAbsPath);
                     this.cmd = this.cmdPrefix + batAbsPath;
                     runExec(this.cmd,this.switchedPath);
-//                    log.info(&quot;Running on step of &quot; + batAbsPath);
-                    System.out.println(&quot;Running on step of &quot; + batAbsPath);
+//                    log.info(&quot;Running on step of &quot; + batAbsPath);               
             	  }
             }
         }
@@ -246,7 +244,7 @@ class RunBat
 }
 
 RunBat runBat = new RunBat();
-runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
+runBat.runMethod(valueStore,keyStore,delPathStore,mvPathStore);</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
@@ -399,7 +397,7 @@ try
 //不追加写入
     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream((new FileOutputStream(filePath)));
     bufferedOutputStream.write(message.getBytes());
-    bufferedOutputStream.close();    
+    bufferedOutputStream.close();
 }
 catch(IOException e)
 {
@@ -424,7 +422,8 @@ catch(IOException e)
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
         &quot;need_wait&quot;:&quot;1&quot;,&#xd;
-        &quot;gas&quot;:0&#xd;
+        &quot;gas&quot;:0,&#xd;
+        &quot;gas_price&quot;:&quot;0&quot;&#xd;
         }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -710,7 +709,8 @@ catch(IOException e)
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
         &quot;need_wait&quot;:&quot;1&quot;,&#xd;
-        &quot;gas&quot;:0&#xd;
+        &quot;gas&quot;:0,&#xd;
+        &quot;gas_price&quot;:&quot;0&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -794,7 +794,7 @@ catch(IOException e)
           </hashTree>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="send" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="send" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -870,7 +870,9 @@ vars.put(&quot;sendCount&quot;,s); </stringProp>
         &quot;amount&quot;: &quot;${randomAmount}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;gas&quot;:0&#xd;
+        &quot;gas&quot;:0,&#xd;
+        &quot;async&quot;:1,&#xd;
+        &quot;gas_price&quot;:&quot;0&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
