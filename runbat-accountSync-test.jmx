@@ -65,7 +65,7 @@
           </elementProp>
           <elementProp name="accountCreateNum" elementType="Argument">
             <stringProp name="Argument.name">accountCreateNum</stringProp>
-            <stringProp name="Argument.value">10000</stringProp>
+            <stringProp name="Argument.value">100000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">account_create 生成账户数量</stringProp>
           </elementProp>
@@ -83,7 +83,7 @@
           </elementProp>
           <elementProp name="sendTradeCounts" elementType="Argument">
             <stringProp name="Argument.name">sendTradeCounts</stringProp>
-            <stringProp name="Argument.value">10000</stringProp>
+            <stringProp name="Argument.value">10000000</stringProp>
             <stringProp name="Argument.desc">send交易次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -192,7 +192,7 @@ class RunBat
     int accountFileDeletionTag =  Integer.valueOf(accountAndDataFileDeletion).intValue();
 
     void runExec(String cmd,String switchedPath)
-    {  
+    {        
         try
         {
             TimeUnit.SECONDS.sleep(10);	
@@ -422,7 +422,7 @@ catch(IOException e)
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
         &quot;need_wait&quot;:&quot;1&quot;,&#xd;
-        &quot;gas&quot;:0,&#xd;
+        &quot;gas&quot;:60000,&#xd;
         &quot;gas_price&quot;:&quot;0&quot;&#xd;
         }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -490,7 +490,7 @@ catch(IOException e)
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="false">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
@@ -709,7 +709,7 @@ catch(IOException e)
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
         &quot;need_wait&quot;:&quot;1&quot;,&#xd;
-        &quot;gas&quot;:0,&#xd;
+        &quot;gas&quot;:60000,&#xd;
         &quot;gas_price&quot;:&quot;0&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
@@ -870,7 +870,7 @@ vars.put(&quot;sendCount&quot;,s); </stringProp>
         &quot;amount&quot;: &quot;${randomAmount}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;gas&quot;:0,&#xd;
+        &quot;gas&quot;:60000,&#xd;
         &quot;async&quot;:1,&#xd;
         &quot;gas_price&quot;:&quot;0&quot;&#xd;
 }</stringProp>
