@@ -192,7 +192,7 @@ class RunBat
     int accountFileDeletionTag =  Integer.valueOf(accountAndDataFileDeletion).intValue();
 
     void runExec(String cmd,String switchedPath)
-    {        
+    {  
         try
         {
             TimeUnit.SECONDS.sleep(10);	
@@ -490,7 +490,7 @@ catch(IOException e)
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="true">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="false">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
