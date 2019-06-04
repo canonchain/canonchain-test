@@ -47,13 +47,13 @@
           </elementProp>
           <elementProp name="accountJson" elementType="Argument">
             <stringProp name="Argument.name">accountJson</stringProp>
-            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_33EuccjKjcZgwbHYp8eLhoFiaKGARVigZojeHzySD9fQ1ysd7u\&quot;,\&quot;kdf_salt\&quot;:\&quot;774DDE2B6D01D6A2B000BB42F8118E2C\&quot;,\&quot;iv\&quot;:\&quot;5EF469016DB117B4437FB46D37BFA925\&quot;,\&quot;ciphertext\&quot;:\&quot;2B9567F4184B4D0A4AD9D5A3BF94805662B562167AFBEC575B06C23F708F0CA0\&quot;}</stringProp>
+            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_3gustGDwMtuUTn1iJHBwRYXCBNF51dRixXNeumWDwZLvH43J3d\&quot;,\&quot;kdf_salt\&quot;:\&quot;5C29B165B101FD831CD820A885A9F5E1\&quot;,\&quot;iv\&quot;:\&quot;B566722D067E614E03ABFB0EF44F7897\&quot;,\&quot;ciphertext\&quot;:\&quot;BBF86E0003F1AB9627F47A9D3357EF2E016F08E6B47245C749B8C1E4CADBE932\&quot;}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">基因账户以及基因账户的加密信息</stringProp>
           </elementProp>
           <elementProp name="from" elementType="Argument">
             <stringProp name="Argument.name">from</stringProp>
-            <stringProp name="Argument.value">czr_33EuccjKjcZgwbHYp8eLhoFiaKGARVigZojeHzySD9fQ1ysd7u</stringProp>
+            <stringProp name="Argument.value">czr_3gustGDwMtuUTn1iJHBwRYXCBNF51dRixXNeumWDwZLvH43J3d</stringProp>
             <stringProp name="Argument.desc">基因账户（为其他账户充值）</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -65,7 +65,7 @@
           </elementProp>
           <elementProp name="accountCreateNum" elementType="Argument">
             <stringProp name="Argument.name">accountCreateNum</stringProp>
-            <stringProp name="Argument.value">10000</stringProp>
+            <stringProp name="Argument.value">500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">account_create 生成账户数量</stringProp>
           </elementProp>
@@ -83,7 +83,7 @@
           </elementProp>
           <elementProp name="sendTradeCounts" elementType="Argument">
             <stringProp name="Argument.name">sendTradeCounts</stringProp>
-            <stringProp name="Argument.value">50000</stringProp>
+            <stringProp name="Argument.value">180000</stringProp>
             <stringProp name="Argument.desc">send交易次数</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
@@ -95,7 +95,7 @@
           </elementProp>
           <elementProp name="autoAssistConfigJsonFile" elementType="Argument">
             <stringProp name="Argument.name">autoAssistConfigJsonFile</stringProp>
-            <stringProp name="Argument.value">C:\configTest.json</stringProp>
+            <stringProp name="Argument.value">C:\config.json</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">自动化辅助JSON文件</stringProp>
           </elementProp>
@@ -111,10 +111,22 @@
             <stringProp name="Argument.desc">1 ：不清除数据</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
+          <elementProp name="testAccountJson" elementType="Argument">
+            <stringProp name="Argument.name">testAccountJson</stringProp>
+            <stringProp name="Argument.value">{\&quot;account\&quot;:\&quot;czr_33EuccjKjcZgwbHYp8eLhoFiaKGARVigZojeHzySD9fQ1ysd7u\&quot;,\&quot;kdf_salt\&quot;:\&quot;C750E3A05139CBBFFCD091C12EAC0A3C\&quot;,\&quot;iv\&quot;:\&quot;0AF671A5625276A2F63B9B2B70645EAE\&quot;,\&quot;ciphertext\&quot;:\&quot;F28C95573CBB65402EFDAD1B751A468C5FC1C68AEEBEB9707A2B5BABB7AD6F2D\&quot;}</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">测试网络的基因账号以及加密信息</stringProp>
+          </elementProp>
+          <elementProp name="testFrom" elementType="Argument">
+            <stringProp name="Argument.name">testFrom</stringProp>
+            <stringProp name="Argument.value">czr_33EuccjKjcZgwbHYp8eLhoFiaKGARVigZojeHzySD9fQ1ysd7u</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">测试网络的基因账户（为其它账户充值）</stringProp>
+          </elementProp>
         </collectionProp>
       </Arguments>
       <hashTree/>
-      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setBatRunning" enabled="true">
+      <SetupThreadGroup guiclass="SetupThreadGroupGui" testclass="SetupThreadGroup" testname="setBatRunning" enabled="false">
         <stringProp name="TestPlan.comments">using BeanShell Sampler to invoke .bat files</stringProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
@@ -142,7 +154,6 @@ String keyStore = new String();
 String[] valueStore  = new String[]{};
 int count=0;
 String delPathStore = new String();
-String movePathStore = new String();
 
 try
 {
@@ -166,10 +177,6 @@ try
             {
                 delPathStore = jsonObject.getString(&quot;delPath&quot;);
             }
-            if (key.equals(&quot;movePath&quot;))
-            {
-            	 movePathStore = jsonObject.getString(&quot;movePath&quot;);	
-            }
             //valueStore.add(value);
             count += 1;
         }
@@ -190,8 +197,7 @@ class RunBat
     private String delPath = new String();
     String accountAndDataFileDeletion = vars.get(&quot;accountAndDataFileDeletion&quot;);
     int accountFileDeletionTag =  Integer.valueOf(accountAndDataFileDeletion).intValue();
-    private String movePath = new String();
-    
+
     void runExec(String cmd,String switchedPath)
     {
         Runtime.getRuntime().exec(cmd,null,new File(switchedPath));//可以使用exec(new String[]{ },null,dir)进行改进
@@ -218,23 +224,22 @@ class RunBat
         }	
     }    
     
-    void runMethod(String [] batAbsolutePath,String switchedPath,String delPath,String movePath)
+    void runMethod(String [] batAbsolutePath,String switchedPath,String delPath)
     {
         this.cmdArray  = Arrays.copyOf(batAbsolutePath,batAbsolutePath.length);
         this.delPath = delPath;
         this.switchedPath = switchedPath;
-        this.movePath = movePath;
-	   
+	 
         if (this.accountFileDeletionTag != 1)
         {
             runExec(this.delPath);	
         }
-            runExec(this.movePath);
+        
         try
         {
             for (String batAbsPath : this.cmdArray)
             {
-                if ((!batAbsPath.equals(this.delPath))&amp;&amp;(!batAbsPath.equals(this.switchedPath))&amp;&amp;(!batAbsPath.equals(this.movePath)))
+                if ((!batAbsPath.equals(this.delPath))&amp;&amp;(!batAbsPath.equals(this.switchedPath)))
                 {
                     this.cmd = this.cmdPrefix + batAbsPath;
                     runExec(this.cmd,this.switchedPath);
@@ -249,7 +254,7 @@ class RunBat
 }
 
 RunBat runBat = new RunBat();
-runBat.runMethod(valueStore,keyStore,delPathStore,movePathStore);</stringProp>
+runBat.runMethod(valueStore,keyStore,delPathStore);</stringProp>
           <stringProp name="BeanShellSampler.filename"></stringProp>
           <stringProp name="BeanShellSampler.parameters"></stringProp>
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
@@ -303,7 +308,7 @@ runBat.runMethod(valueStore,keyStore,delPathStore,movePathStore);</stringProp>
         <hashTree>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response assert" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="833911223">&quot;account&quot;</stringProp>
+              <stringProp name="1289414348">  &quot;success&quot;: &quot;1&quot;</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -353,7 +358,7 @@ runBat.runMethod(valueStore,keyStore,delPathStore,movePathStore);</stringProp>
             <stringProp name="shareMode">shareMode.all</stringProp>
           </CSVDataSet>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="account extraction" enabled="false">
+          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="account extraction" enabled="true">
             <stringProp name="RegexExtractor.useHeaders">false</stringProp>
             <stringProp name="RegexExtractor.refname">remoteGenenisAccount</stringProp>
             <stringProp name="RegexExtractor.regex">&quot;account&quot;: &quot;(.+?)&quot;</stringProp>
@@ -364,19 +369,13 @@ runBat.runMethod(valueStore,keyStore,delPathStore,movePathStore);</stringProp>
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response assert" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="833911223">&quot;account&quot;</stringProp>
+              <stringProp name="-1159553641"> &quot;account&quot;</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">2</intProp>
             <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
-          <hashTree/>
-          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-            <stringProp name="JSONPostProcessor.referenceNames">remoteGenenisAccount</stringProp>
-            <stringProp name="JSONPostProcessor.jsonPathExprs">$.account</stringProp>
-            <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
@@ -390,14 +389,23 @@ try
 {
     File file = new File(filePath);
 //如果文件不存在,就新建一个文件;
+    if(!file.delete())
+    {
+        System.out.println(&quot;Attention : File deletion failed!&quot;);
 //在jmeter的/bin目录下会生成jmeter.log日志；
 //将日志参数设为 log_level.jmeter=ERROR ，log_level.jmeter.junit=DEBUG即可；
 //        log.error(&quot;Attention : File deletion failed!&quot;);
-    if(file.exists() &amp;&amp; !file.delete())
-    {
-        System.out.println(&quot;Attention : File deletion failed!&quot;);
     }	
-//文件末尾追加写入文件;
+
+    if (!(file.exists() &amp;&amp; file.isFile()))
+    { 
+        file.createNewFile();
+    }
+
+//文件末尾追加写入文件;直接写入文件异常情况下会造成死锁；改成bufferedOutputStream方法
+//    FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
+//    fos.write(message.getBytes());   
+//    fos.close();
 // 追加写入
 //    BufferedOutputStream bufferedOutputStream = new BufferedOutputStream((new FileOutputStream(filePath,true)));
 //不追加写入
@@ -421,14 +429,14 @@ catch(IOException e)
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-        &quot;action&quot;: &quot;send_block&quot;,&#xd;
+        &quot;action&quot;: &quot;send&quot;,&#xd;
         &quot;from&quot;: &quot;${from}&quot;,&#xd;
         &quot;to&quot;: &quot;${remoteGenenisAccount}&quot;,&#xd;
         &quot;amount&quot;: &quot;${initAmount}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;need_wait&quot;:&quot;1&quot;,&#xd;
-        &quot;gas&quot;:0&#xd;
+        &quot;need_wait&quot;:&quot;true&quot;,&#xd;
+        &quot;gas&quot;:&quot;0&quot;&#xd;
         }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
@@ -464,7 +472,7 @@ catch(IOException e)
           <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="respose assert" enabled="true">
             <collectionProp name="Asserion.test_strings">
-              <stringProp name="1072440818">&quot;hash&quot;</stringProp>
+              <stringProp name="-1275810857">&quot;block&quot;</stringProp>
             </collectionProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
@@ -474,7 +482,7 @@ catch(IOException e)
           <hashTree/>
         </hashTree>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="AccountCreateSync" enabled="false">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="AccountCreateSync" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">stopthread</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="循环控制器" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
@@ -495,7 +503,7 @@ catch(IOException e)
           <boolProp name="TransactionController.parent">false</boolProp>
         </TransactionController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="false">
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="account_import" enabled="true">
             <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
               <collectionProp name="Arguments.arguments">
@@ -526,7 +534,7 @@ catch(IOException e)
           <hashTree>
             <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response assert" enabled="true">
               <collectionProp name="Asserion.test_strings">
-                <stringProp name="833911223">&quot;account&quot;</stringProp>
+                <stringProp name="1289414348">  &quot;success&quot;: &quot;1&quot;</stringProp>
               </collectionProp>
               <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
               <boolProp name="Assertion.assume_success">false</boolProp>
@@ -550,10 +558,6 @@ try
     // 循环获取文件行数
     String str = null;
     //读取remoteGenesisiAccount;
-    LineNumberReader reader = new LineNumberReader(bufferedReader);
-    String firstLine = reader.readLine();
-    vars.put(&quot;remoteGenenisAccount&quot;,firstLine);
-    reader.close();
 
     while ((str = bufferedReader.readLine()) != null)
     { 
@@ -578,6 +582,11 @@ if (c &lt; 0 )
 String d = String.valueOf(c);
 //System.out.println(d);
 vars.put(&quot;createCount&quot;,d);
+
+
+
+
+
 
 
 
@@ -639,7 +648,7 @@ vars.put(&quot;createCount&quot;,d);
                 <stringProp name="shareMode">shareMode.all</stringProp>
               </CSVDataSet>
               <hashTree/>
-              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="account extraction" enabled="false">
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="account extraction" enabled="true">
                 <stringProp name="RegexExtractor.useHeaders">false</stringProp>
                 <stringProp name="RegexExtractor.refname">to</stringProp>
                 <stringProp name="RegexExtractor.regex">&quot;account&quot;: &quot;(.+?)&quot;</stringProp>
@@ -650,19 +659,13 @@ vars.put(&quot;createCount&quot;,d);
               <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response assert" enabled="true">
                 <collectionProp name="Asserion.test_strings">
-                  <stringProp name="833911223">&quot;account&quot;</stringProp>
+                  <stringProp name="-1159553641"> &quot;account&quot;</stringProp>
                 </collectionProp>
                 <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
                 <boolProp name="Assertion.assume_success">false</boolProp>
                 <intProp name="Assertion.test_type">2</intProp>
                 <stringProp name="Assertion.custom_message"></stringProp>
               </ResponseAssertion>
-              <hashTree/>
-              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
-                <stringProp name="JSONPostProcessor.referenceNames">to</stringProp>
-                <stringProp name="JSONPostProcessor.jsonPathExprs">$.account</stringProp>
-                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
-              </JSONPostProcessor>
               <hashTree/>
             </hashTree>
             <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="write" enabled="true">
@@ -671,7 +674,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-//import org.apache.log4j.Logger;
 
 // 传入jmeter 变量 account  ,使用java变量 message接收
 String message= vars.get(&quot;to&quot;);
@@ -680,7 +682,13 @@ String filePath= vars.get(&quot;accountFilePath&quot;);
 try
 {
     File file = new File(filePath);
-// 文件末尾追加写入文件      
+// 文件末尾追加写入文件  
+//    FileOutputStream fos = new FileOutputStream(file.getAbsoluteFile(),true);
+//    fos.write(&quot;\n&quot;.getBytes());
+//    fos.write(message.getBytes());     
+//    fos.close();
+//    log.error(&quot;failed to close file!&quot;);
+    
     BufferedOutputStream bufferedOutputStream = new BufferedOutputStream((new FileOutputStream(filePath,true)));
     bufferedOutputStream.write(&quot;\n&quot;.getBytes());
     bufferedOutputStream.write(message.getBytes());
@@ -703,14 +711,14 @@ catch(IOException e)
                   <elementProp name="" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.value">{&#xd;
-        &quot;action&quot;: &quot;send_block&quot;,&#xd;
+        &quot;action&quot;: &quot;send&quot;,&#xd;
         &quot;from&quot;: &quot;${remoteGenenisAccount}&quot;,&#xd;
         &quot;to&quot;: &quot;${to}&quot;,&#xd;
         &quot;amount&quot;: &quot;1000000&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;need_wait&quot;:&quot;1&quot;,&#xd;
-        &quot;gas&quot;:0&#xd;
+        &quot;need_wait&quot;:&quot;true&quot;,&#xd;
+        &quot;gas&quot;:&quot;0&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -732,19 +740,7 @@ catch(IOException e)
               <stringProp name="TestPlan.comments">send amount to activate / initialize created accounts</stringProp>
             </HTTPSamplerProxy>
             <hashTree>
-              <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="from" enabled="false">
-                <stringProp name="filename">${accountFilePath}</stringProp>
-                <stringProp name="fileEncoding">utf-8</stringProp>
-                <stringProp name="variableNames">remoteGenenisAccount</stringProp>
-                <boolProp name="ignoreFirstLine">false</boolProp>
-                <stringProp name="delimiter">,</stringProp>
-                <boolProp name="quotedData">false</boolProp>
-                <boolProp name="recycle">true</boolProp>
-                <boolProp name="stopThread">false</boolProp>
-                <stringProp name="shareMode">shareMode.all</stringProp>
-              </CSVDataSet>
-              <hashTree/>
-              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="false">
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
                 <boolProp name="resetInterpreter">false</boolProp>
                 <stringProp name="parameters"></stringProp>
                 <stringProp name="filename"></stringProp>
@@ -756,11 +752,15 @@ try
     File file = new File(filePath);
     // 读文件
     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file.getAbsolutePath()), &quot;UTF-8&quot;));
-    String str = null;
+    //读取第一行账号作为remoteGenesisiAccount;
+    int LineExpNumber = 0;
     LineNumberReader reader = new LineNumberReader(bufferedReader);
-    String firstLine = reader.readLine();
-    vars.put(&quot;remoteGenenisAccount&quot;,firstLine);
-    reader.close();
+    if (LineExpNUmber == 0)
+    {
+        String firstLine = reader.readLine();
+        vars.put(&quot;remoteGenenisAccount&quot;,firstLine);	
+    } 
+    bufferedReader.close();
 }
 catch(IOException e)
 {
@@ -782,7 +782,7 @@ catch(IOException e)
               <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="respose assert" enabled="true">
                 <collectionProp name="Asserion.test_strings">
-                  <stringProp name="1072440818">&quot;hash&quot;</stringProp>
+                  <stringProp name="-1275810857">&quot;block&quot;</stringProp>
                 </collectionProp>
                 <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
                 <boolProp name="Assertion.assume_success">false</boolProp>
@@ -860,13 +860,13 @@ vars.put(&quot;sendCount&quot;,s); </stringProp>
                   <elementProp name="" elementType="HTTPArgument">
                     <boolProp name="HTTPArgument.always_encode">false</boolProp>
                     <stringProp name="Argument.value">{&#xd;
-        &quot;action&quot;:&quot;send_block&quot;,&#xd;
+        &quot;action&quot;:&quot;send&quot;,&#xd;
         &quot;from&quot;:&quot;${fromm}&quot;,&#xd;
         &quot;to&quot;:&quot;${reach}&quot;,&#xd;
         &quot;amount&quot;: &quot;${randomAmount}&quot;,&#xd;
         &quot;password&quot;: &quot;${password}&quot;,&#xd;
         &quot;data&quot;: &quot;&quot;,&#xd;
-        &quot;gas&quot;:0&#xd;
+        &quot;gas&quot;:&quot;0&quot;&#xd;
 }</stringProp>
                     <stringProp name="Argument.metadata">=</stringProp>
                   </elementProp>
@@ -925,7 +925,7 @@ vars.put(&quot;sendCount&quot;,s); </stringProp>
               <hashTree/>
               <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="response assert" enabled="true">
                 <collectionProp name="Asserion.test_strings">
-                  <stringProp name="1072440818">&quot;hash&quot;</stringProp>
+                  <stringProp name="-1275810857">&quot;block&quot;</stringProp>
                 </collectionProp>
                 <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
                 <boolProp name="Assertion.assume_success">false</boolProp>
@@ -1032,7 +1032,7 @@ vars.put(&quot;sendCount&quot;,s); </stringProp>
         <longProp name="ThreadGroup.end_time">1543805857000</longProp>
       </PostThreadGroup>
       <hashTree>
-        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="closeBat" enabled="true">
+        <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="closeBat" enabled="false">
           <stringProp name="TestPlan.comments">using Beanshell Scripts to close nodes</stringProp>
           <stringProp name="BeanShellSampler.query">import java.io.*;
 //String cmdd = &quot;cmd.exe /c start wmic process where name=&apos;canonchain.exe&apos; terminate&quot;;
@@ -1052,7 +1052,7 @@ catch(IOException e)
           <boolProp name="BeanShellSampler.resetInterpreter">false</boolProp>
         </BeanShellSampler>
         <hashTree/>
-        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="closeBat" enabled="false">
+        <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="closeBat" enabled="true">
           <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
             <collectionProp name="Arguments.arguments">
